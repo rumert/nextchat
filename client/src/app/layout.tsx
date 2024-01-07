@@ -4,7 +4,7 @@ import './globals.css'
 
 //components
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import RedirectLogin from './components/RedirectLogin'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar />
         {children}
-        <Footer />
+        <RedirectLogin />
       </body>
     </html>
   )

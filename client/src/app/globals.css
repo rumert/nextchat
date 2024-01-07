@@ -3,3 +3,90 @@
 @tailwind utilities;
 
 
+  .site {
+    position: relative;
+    min-height: 100%;
+    padding: 2rem;
+    display: grid;
+    place-items: center;
+  }
+  .site::after {
+    position: absolute;
+    content: "";
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+  }
+  .phone {
+    --black5: #404040;
+    --black4: #505050;
+    z-index: 1;
+    width: 13rem;
+    height: 24rem;
+    padding: 0 0.5rem;
+    border: 0.25rem solid var(--black5);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #eaeaea;
+    box-shadow: 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+  }
+  .phone.-loooooong{
+    height: 100%;
+  }
+  
+  .phone_mic {
+    height: 0.25rem;
+    width: 4rem;
+    margin: 1rem auto;
+    border-radius: 999rem;
+    background-color: var(--black4);
+  }
+  .phone_screen {
+    position: relative;
+    flex: 1 0 auto;
+    background-color: #FFB6C1;
+    border-radius: 12px;
+  }
+  .phone_screen::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.3);
+    clip-path: polygon(70% 0, 100% 0%, 100% 100%, 30% 100%);
+  }
+  .phone_button {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid var(--black4);
+    border-radius: 50%;
+    margin: 1rem auto;
+  }
+
+  .notification {
+    position: absolute;
+    top: 3%;
+    right: 12.5%;
+    background-color: #FF9FF3;
+    color: #808080;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+    transform: translateY(-100%);
+  }
+  
+  .notification.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
