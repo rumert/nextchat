@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
+import '../globals.css'
 
 //components
-import Navbar from './components/Navbar'
-import RedirectLogin from './components/RedirectLogin'
+import Navbar from '../components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,10 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} flex flex-col h-screen`}>
         <Navbar />
         {children}
-        <RedirectLogin />
       </body>
     </html>
   )
