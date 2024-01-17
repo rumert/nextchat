@@ -1,43 +1,27 @@
-import { db } from "@/app/firebase"
-import { arrayUnion, doc, updateDoc, getDoc, onSnapshot} from "firebase/firestore"; 
+import { db } from "../../../../firebase";
+import { arrayUnion, collection, where, doc, query, updateDoc } from "firebase/firestore"; 
 
-const chatRef = doc(db, "chats", "r5vcum1IsYJaDR6raOKK")
+const colRef: any = collection(db, "chats")
+const q = query(colRef, where("messages", "array-contains", {"text": "a", "sender": "sender"}))
 
 export async function POST(req: Request) {
-    
-    const text = await req.json()
-
+    const docRef: any = doc(db, "chats", "R9k98M3bRw8cVmVX7nqc")
     try {
-        const message = {
-            sender: "sender",
-            text: text
-        }
-        await updateDoc(chatRef, {
-            messages: arrayUnion(message)
-        });
+        const res = await req.json()
+        const message = res.message
+        await updateDoc(docRef, { messages: arrayUnion(message) });
+        return Response.json('OK')
     } catch (err) {
-      console.error('firebase error:', err);
+        console.error('firebase error:', err);
     }
-    
-    return Response.json('OK') 
 }
 
-export async function GET() {
-    const docSnap = await getDoc(chatRef)
-    const data = docSnap.data()
-    return Response.json( data )
-}
 
-const changedData = () => onSnapshot(chatRef, (snapshot) => {
-    console.log('data received: ', snapshot)
-    let chats: any = []
-    const dataa: any = snapshot.data()
-    const messagess = dataa.messages
-    messagess.map((message: any) => chats.push(message.text))
-    
-    return () => changedData()
-    //setMessages(doc.data().messages);
-})
+
+
+
+
+
 
 
 
