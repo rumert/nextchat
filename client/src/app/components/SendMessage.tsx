@@ -10,7 +10,7 @@ function SendMessage() {
       if (inputVal.trim() != '') {
         const text = inputVal
         const message = { sender: "sender", text: text }
-        const res = await fetch('/api/messages', {
+        const res = await fetch('/api/addMessage', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json', 
