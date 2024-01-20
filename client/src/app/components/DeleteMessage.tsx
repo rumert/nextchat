@@ -3,20 +3,20 @@ import React from 'react'
 import { MdDelete } from "react-icons/md";
 
 
-export async function handleDelete(m: any) {
+export async function handleDelete(id: any) {
     const res = await fetch('/api/deleteMessage', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json', 
       },
-      body: JSON.stringify({ m })
+      body: JSON.stringify({ id })
     })
     
 }
 
-function DeleteMessage(m: any) {
+function DeleteMessage(id: any) {
   return (
-    <button onClick={() => handleDelete(m)} className='inline text-xl'><MdDelete /></button>
+    <button onClick={() => handleDelete(id)} className='inline text-xl'><MdDelete /></button>
   )
 }
 

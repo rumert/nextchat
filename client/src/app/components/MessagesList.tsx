@@ -3,21 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { getMessagesSnapshot } from '../../../lib/firebase/firebase'
 import DeleteMessage from './DeleteMessage';
 
-interface MessageObject {
-    sender: string;
-    text: string;
-}
 
 function MessagesList({ initialMessages }: any) {
 
-    
-    const [messages, setMessages] = useState<MessageObject[]>(initialMessages)
+    const [messages, setMessages] = useState(initialMessages)
 
     useEffect(() => {
-        const unsub: any = getMessagesSnapshot( (data: any) => {
-            if (data && data[0] && data[0].messages) {
-                const a = data[0].messages;
-                setMessages(a);
+        const unsub: any = getMessagesSnapshot( (mes: any) => {
+            if (mes) {
+                setMessages(mes);
             } else {
                 console.log("no data")
             }
@@ -29,9 +23,9 @@ function MessagesList({ initialMessages }: any) {
   return (
     <div className='flex-grow flex flex-col pt-4 gap-2'>
         {messages.length != 0 && 
-            messages.map( (m: MessageObject, index: number) => {
+            messages.map( (m: any, index: number) => {
             return <div className='ml-auto flex' key={index} >
-                    <DeleteMessage m={m} />
+                    <DeleteMessage id={m.id} />
                     <div 
                         className='border-2 rounded-xl w-fit px-2'
                     >

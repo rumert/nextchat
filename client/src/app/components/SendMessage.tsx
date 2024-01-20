@@ -6,19 +6,16 @@ function SendMessage() {
   const [inputVal, setInputVal] = useState('')
 
   async function handleSubmit(e: any){
-      e.preventDefault()
-      if (inputVal.trim() != '') {
-        const text = inputVal
-        const message = { sender: "sender", text: text }
-        const res = await fetch('/api/addMessage', {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json', 
-          },
-          body: JSON.stringify({ message })
-        })
-      }
-      
+    e.preventDefault()
+    if (inputVal.trim() != '') {
+      const res = await fetch('/api/addMessage', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json', 
+        },
+        body: JSON.stringify( inputVal )
+      })
+    }  
   }
   return (
     <form onSubmit={handleSubmit} className='h-[15%] flex'>

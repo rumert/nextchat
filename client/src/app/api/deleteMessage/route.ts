@@ -1,14 +1,14 @@
-import { arrayRemove, doc, updateDoc } from "firebase/firestore";
+import { arrayRemove, collection, deleteDoc, doc, query, updateDoc } from "firebase/firestore";
 import { db } from "../../../../lib/firebase/firebase";
 
 
 export async function POST(req: Request) {
-    const docRef: any = doc(db, "chats", "r5vcum1IsYJaDR6raOKK")
+    
+    const colRef: any = collection(db, "chats", "r5vcum1IsYJaDR6raOKK", "messages")
     try {
-        const m = await req.json()
-        await updateDoc(docRef, {
-            messages: arrayRemove(m.m.m)
-        })
+        const idObj = await req.json()
+        const id = idObj.id.id
+        await deleteDoc(doc(db, "chats", "r5vcum1IsYJaDR6raOKK", "messages", id))
         return Response.json('OK')
     } catch (err) {
         console.error('firebase error:', err);
