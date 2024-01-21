@@ -14,7 +14,7 @@ function Navbar() {
             fill={true}
           />
         </Link>
-        <Link href="/" className='block h-[75%] border rounded-xl shadow-md py-[1.5%]'>
+        <Link href="/register" className='block h-[75%] border rounded-xl shadow-md py-[1.5%]'>
           <div className=''>GET STARTED</div>
         </Link>
       </div>

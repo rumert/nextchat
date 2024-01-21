@@ -1,4 +1,5 @@
 import { initializeApp, getApps } from 'firebase/app'
+import { getAuth } from 'firebase/auth';
 import { collection, getDocs, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -12,6 +13,7 @@ const firebaseConfig = {
  
 let app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
+export const auth = getAuth(app)
 export const db = getFirestore(app)
 
 export async function getMessages() {
