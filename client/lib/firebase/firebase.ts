@@ -1,6 +1,7 @@
 import { initializeApp, getApps } from 'firebase/app'
 import { getAuth } from 'firebase/auth';
-import { collection, getDocs, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { getFirestore } from 'firebase/firestore';
+
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,38 +14,17 @@ const firebaseConfig = {
  
 let app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
-export const auth = getAuth(app)
+export const auth: any = getAuth(app)
 export const db = getFirestore(app)
 
-export async function getMessages() {
-    const colRef: any = collection(db, "chats", "r5vcum1IsYJaDR6raOKK", "messages")
-    const q = query( colRef, orderBy('createdAt') )
-    const chatDocs = await getDocs(q)
-    let messages: any = []
-    chatDocs.forEach((doc: any) => {
-        const data = doc.data()
-        delete data.createdAt
-        messages.push(data);
-    })
-    return messages
+export async function getAuthenticatedAppForUser(session = null) {
+
+    if (typeof window !== "undefined") {
+      // client
+      console.log("client: ", app);
+  
+      return { app: app, user: auth.currentUser.toJSON() };
+    }
 }
-
-export async function getMessagesSnapshot(callback: Function) {
-
-    const colRef: any = collection(db, "chats", "r5vcum1IsYJaDR6raOKK", "messages")
-    const q = query( colRef, orderBy('createdAt') )
-
-    const mesSnap = onSnapshot(q, (snap: any) => {
-        const results = snap.docs.map((doc: any) => {
-            const data = doc.data()
-            delete data.createdAt
-            return data;
-        })
-        callback(results)
-    })
-
-    return mesSnap
-}
-
 
 

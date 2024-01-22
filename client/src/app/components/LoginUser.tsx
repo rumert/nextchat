@@ -1,11 +1,15 @@
 'use client'
+import  {useRouter}  from 'next/navigation'
 import React, { useState } from 'react'
+import Link from 'next/link'
 
 function LoginUser() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError]: any = useState(false)
+    const router: any = useRouter()
 
-    async function handleSubmit(e: any) {
+    async function handleLogin(e: any) {
         e.preventDefault()
         const emaill = email
         const passwordd = password
@@ -18,10 +22,12 @@ function LoginUser() {
             },
             body: JSON.stringify( {emaill, passwordd} )
         })
+        const resMes = await res.json()
+        if (resMes.mes == 'OK') {router.push('/a')}
+        else { setError(resMes.mes) }
     }
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleLogin}>
 
       <label htmlFor="email">email: </label>
       <input 
@@ -44,7 +50,10 @@ function LoginUser() {
         required
       />
 
-      <button type='submit' className='border-2 mb-4'>LOGIN</button>
+      <button type='submit' className='border-2 mb-2 block'>LOGIN</button>
+      { error && <p>{error}</p> }
+      <p className='inline'>Don't have an Account? </p>
+      <Link href='/register' className='text-purple-600 underline mb-2'>Sign up!</Link>
 
     </form>
   )

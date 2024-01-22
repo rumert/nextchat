@@ -1,28 +1,32 @@
 'use client'
+import Link from 'next/link'
 import React, { useState } from 'react'
 
 function CreateUser() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [created, setCreated]: any = useState('')
 
-    async function handleSubmit(e: any) {
+    async function handleRegister(e: any) {
         e.preventDefault()
         const emaill = email
         const passwordd = password
         setEmail('')
         setPassword('')
-        const res = await fetch('/api/createUser', {
+        const res: any = await fetch('/api/createUser', {
             method: 'POST',
             headers: {
               'Content-type': 'application/json', 
             },
             body: JSON.stringify( {emaill, passwordd} )
         })
+        const resMes = await res.json();
+        res.ok ? setCreated(resMes) : setCreated('An error occured, please try again')
     }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleRegister}>
 
       <label htmlFor="email">email: </label>
       <input 
@@ -45,7 +49,10 @@ function CreateUser() {
         required
       />
 
-      <button type='submit' className='border-2 mb-4'>CREATE</button>
+      <button type='submit' className='border-2 mb-2'>CREATE</button>
+      {<p>{created}</p>}
+      <p className='inline'>Or already </p>
+      <Link href='/login' className='text-purple-600 underline mb-2'>have an account?</Link>
 
     </form>
   )
