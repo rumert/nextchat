@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginUser from '@/app/components/LoginUser'
+import LoginUser from '@/components/LoginUser'
 
 function page() {
 

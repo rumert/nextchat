@@ -1,5 +1,5 @@
 import { db } from "../../../../lib/firebase/firebase";
-import { addDoc, collection, documentId, serverTimestamp, updateDoc } from "firebase/firestore"; 
+import { addDoc, collection, serverTimestamp, updateDoc } from "firebase/firestore"; 
 
 export async function POST(req: Request) {
     const colRef: any = collection(db, "chats", "r5vcum1IsYJaDR6raOKK", "messages")

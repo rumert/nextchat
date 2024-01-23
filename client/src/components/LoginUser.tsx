@@ -22,9 +22,14 @@ function LoginUser() {
             },
             body: JSON.stringify( {emaill, passwordd} )
         })
-        const resMes = await res.json()
-        if (resMes.mes == 'OK') {router.push('/a')}
-        else { setError(resMes.mes) }
+        const resp = await res.json()
+        if (resp.response == 'Invalid email or password.' || resp.response == 'An error occured, please try again.'){
+          setError(resp.response)
+        }
+        else { 
+          console.log(resp.response)
+          router.push('/a')
+        }
     }
   return (
     <form onSubmit={handleLogin}>

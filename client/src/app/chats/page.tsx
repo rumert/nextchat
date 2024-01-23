@@ -1,6 +1,6 @@
-import MessagesList from "@/app/components/MessagesList"
-import { getMessages } from "../../../../lib/firebase/firebase"
-import SendMessage from "@/app/components/SendMessage";
+import MessagesList from "@/components/MessagesList"
+import { getMessages } from "../../../lib/firebase/firestore";
+import SendMessage from "@/components/SendMessage";
 
 export const dynamic = "force-dynamic";
 

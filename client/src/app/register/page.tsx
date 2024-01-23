@@ -1,4 +1,4 @@
-import CreateUser from '@/app/components/CreateUser'
+import CreateUser from '@/components/CreateUser'
 import React from 'react'
 
 function page() {

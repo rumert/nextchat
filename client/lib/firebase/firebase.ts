@@ -12,19 +12,9 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
  
-let app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+export const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 export const auth: any = getAuth(app)
 export const db = getFirestore(app)
-
-export async function getAuthenticatedAppForUser(session = null) {
-
-    if (typeof window !== "undefined") {
-      // client
-      console.log("client: ", app);
-  
-      return { app: app, user: auth.currentUser.toJSON() };
-    }
-}
 
 

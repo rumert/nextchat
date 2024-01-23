@@ -1,10 +1,11 @@
-import { signUpEmPass } from "../../../../lib/firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../../lib/firebase/firebase";
 
 export async function POST(req: Request) {
 
     try {
         const data = await req.json()
-        signUpEmPass(data.emaill, data.passwordd)
+        createUserWithEmailAndPassword(auth, data.emaill, data.passwordd)
         return Response.json( 'User created. Verification email sent!' )
     } catch (error: any) {
         console.error('firebase error:', error);
