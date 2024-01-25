@@ -5,11 +5,7 @@ import './globals.css'
 //components
 import Navbar from '@/components/Navbar'
 import RedirectLogin from '@/components/RedirectLogin'
-import { auth } from '../../lib/firebase/firebase'
-
-export const dynamic = "force-dynamic";
-
-const initialUser = auth.currentUser;
+import { AuthContextProvider } from '@/context/AuthContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,9 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar initialUser={initialUser}/>
-        {children}
-        <RedirectLogin />
+        
+        {/* Wrap the children with the AuthContextProvider to provide authentication context */}
+        <AuthContextProvider>
+          <Navbar />
+          {children}
+          <RedirectLogin />
+        </AuthContextProvider>  
+
       </body>
     </html>
   )

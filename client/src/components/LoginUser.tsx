@@ -2,33 +2,27 @@
 import  {useRouter}  from 'next/navigation'
 import React, { useState } from 'react'
 import Link from 'next/link'
+import signInEmPass from '../../lib/firebase/auth'
 
 function LoginUser() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError]: any = useState(false)
+    const [error, setError]: any = useState(null)
     const router: any = useRouter()
 
     async function handleLogin(e: any) {
         e.preventDefault()
-        const emaill = email
-        const passwordd = password
-        setEmail('')
-        setPassword('')
-        const res = await fetch('/api/loginUser', {
-            method: 'POST',
-            headers: {
-              'Content-type': 'application/json', 
-            },
-            body: JSON.stringify( {emaill, passwordd} )
-        })
-        const resp = await res.json()
-        if (resp.response == 'Invalid email or password.' || resp.response == 'An error occured, please try again.'){
-          setError(resp.response)
+        const { result, error }: any = await signInEmPass(email, password)
+
+        if ( error ) {
+          // Display and log any sign-in errors
+          console.log( error );
+          setError(error)
+          return;
         }
         else { 
-          console.log(resp.response)
-          router.push('/a')
+          console.log(result)
+          router.push(`/${result.displayName}`)
         }
     }
   return (

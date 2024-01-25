@@ -5,7 +5,7 @@ export async function POST(req: Request) {
 
     try {
         const data = await req.json()
-        createUserWithEmailAndPassword(auth, data.emaill, data.passwordd)
+        createUserWithEmailAndPassword(auth, data.email, data.password)
         return Response.json( 'User created. Verification email sent!' )
     } catch (error: any) {
         console.error('firebase error:', error);

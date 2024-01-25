@@ -4,22 +4,19 @@ import React, { useState } from 'react'
 
 function CreateUser() {
 
+    const [nickname, setNickname] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [created, setCreated]: any = useState('')
 
     async function handleRegister(e: any) {
         e.preventDefault()
-        const emaill = email
-        const passwordd = password
-        setEmail('')
-        setPassword('')
         const res: any = await fetch('/api/createUser', {
             method: 'POST',
             headers: {
               'Content-type': 'application/json', 
             },
-            body: JSON.stringify( {emaill, passwordd} )
+            body: JSON.stringify( { nickname, email, password } )
         })
         const resMes = await res.json();
         res.ok ? setCreated(resMes) : setCreated('An error occured, please try again')
@@ -28,7 +25,17 @@ function CreateUser() {
   return (
     <form onSubmit={handleRegister}>
 
-      <label htmlFor="email">email: </label>
+      <label htmlFor="nickname">Nickname: </label>
+      <input 
+        type="text" 
+        id='nickname' 
+        value={nickname}
+        onChange={e => setNickname(e.target.value)} 
+        className='border-2 block mb-4' 
+        required
+      />
+
+      <label htmlFor="email">Email: </label>
       <input 
         type="email" 
         id='email' 
@@ -38,7 +45,7 @@ function CreateUser() {
         required
       />
 
-      <label htmlFor="password">password: </label>
+      <label htmlFor="password">Password: </label>
       <input 
         type="password" 
         id='password'

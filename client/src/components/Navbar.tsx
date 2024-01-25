@@ -1,26 +1,17 @@
 'use client'
+import { useAuthContext } from '@/context/AuthContext';
+import { signOut } from 'firebase/auth';
 import Image from 'next/image'
 import Link from 'next/link';
-import { onAuthChanged } from '../../lib/firebase/auth';
 import { useEffect, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../lib/firebase/firebase';
 
 
-function Navbar({initialUser}: any) {
 
-  const [user, setUSer] = useState(initialUser)
+function Navbar() {
 
-  useEffect(() => {
-    const unsub: any = onAuthStateChanged(auth, (authUser: any) => {
-      setUSer(authUser)
-      console.log(authUser)
-    })
-
-    return () => unsub
-  }, [])
-
-  console.log(user)
+  const { user }: any = useAuthContext()
+  const [userr, setUserr]: any = useState(user)
 
   return (
     <div className='pr-4 pl-8'>
@@ -36,7 +27,7 @@ function Navbar({initialUser}: any) {
         <Link href="/register" className='block h-[75%] border rounded-xl shadow-md py-[1.5%]'>
           <div className=''>GET STARTED</div>
         </Link> :
-        <Link href='/user'>{user.email}</Link>
+        <Link href='/user'>{user.displayName}</Link>
         }
       </div>
     </div>
