@@ -21,14 +21,14 @@ function SendMessage() {
     
   }
   return (
-    <form onSubmit={handleSubmit} className='h-[15%] flex'>
+    <form onSubmit={handleSubmit} className='h-[10%] flex'>
       <input 
           type="text" 
           className='h-full w-[80%] border-2'
           value={inputVal}
           onChange={e => setInputVal(e.target.value)}
       /> 
-      <button type='submit' className='flex-grow border-2'></button>
+      <button type='submit' className='flex-grow border-2'>SEND</button>
     </form>
   )
 }

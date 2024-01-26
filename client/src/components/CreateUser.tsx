@@ -20,6 +20,9 @@ function CreateUser() {
         })
         const resMes = await res.json();
         res.ok ? setCreated(resMes) : setCreated('An error occured, please try again')
+        setNickname('')
+        setEmail('')
+        setPassword('')
     }
 
   return (

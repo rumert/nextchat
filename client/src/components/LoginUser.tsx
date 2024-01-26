@@ -8,12 +8,12 @@ function LoginUser() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError]: any = useState(null)
+    const [user, setUser]: any = useState(null)
     const router: any = useRouter()
 
     async function handleLogin(e: any) {
         e.preventDefault()
         const { result, error }: any = await signInEmPass(email, password)
-
         if ( error ) {
           // Display and log any sign-in errors
           console.log( error );
@@ -21,8 +21,8 @@ function LoginUser() {
           return;
         }
         else { 
-          console.log(result)
-          router.push(`/${result.displayName}`)
+          //console.log(result)
+          router.push('/')
         }
     }
   return (

@@ -1,10 +1,24 @@
+'use client'
 import MessagesList from "@/components/MessagesList"
-import { getMessages } from "../../../lib/firebase/firestore";
+import { getMessages } from "../../lib/firebase/firestore";
 import SendMessage from "@/components/SendMessage";
+import { useEffect, useState } from "react";
 
-export default async function Chats() {
+export default function Main() {
+  const [messages, setMessages] = useState([]);
 
-  const messages = await getMessages()
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const messagesData = await getMessages();
+        setMessages(messagesData);
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      }
+    };
+
+    fetchMessages();
+  }, []);
   
   return (
     <div className='flex-grow flex flex-col h-[88vh]'>

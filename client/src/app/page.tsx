@@ -1,16 +1,7 @@
-import React from 'react'
-import Phone from '@/components/Phone'
-import Features from '@/components/Features'
+import dynamic from 'next/dynamic';
 
+const DynamicHome = dynamic(() => import('@/components/Home'), { ssr: false });
 
-function Home() {
-
-  return (
-    <div>
-      <Phone />  
-      <Features />
-    </div>
-  )
+export default function Home() {
+  return <><DynamicHome /></>;
 }
-
-export default Home

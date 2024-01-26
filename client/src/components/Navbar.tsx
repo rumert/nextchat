@@ -3,15 +3,18 @@ import { useAuthContext } from '@/context/AuthContext';
 import { signOut } from 'firebase/auth';
 import Image from 'next/image'
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { auth } from '../../lib/firebase/firebase';
-
 
 
 function Navbar() {
 
   const { user }: any = useAuthContext()
   const [userr, setUserr]: any = useState(user)
+
+  function handleLogOut() {
+    signOut(auth)
+  }
 
   return (
     <div className='pr-4 pl-8'>
@@ -23,11 +26,12 @@ function Navbar() {
             fill={true}
           />
         </Link>
+        <button onClick={handleLogOut}>log out</button>
         {!user ? 
         <Link href="/register" className='block h-[75%] border rounded-xl shadow-md py-[1.5%]'>
           <div className=''>GET STARTED</div>
         </Link> :
-        <Link href='/user'>{user.displayName}</Link>
+        <Link href = '/' >{user.displayName}</Link>
         }
       </div>
     </div>
