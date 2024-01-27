@@ -17,12 +17,14 @@ export async function POST(req: Request) {
         const user: any = await signUpEmPass(data.email, data.password)
         const uid = user.uid
         await updateProfile(user, {displayName: data.nickname})
-        const docRef = await addDoc(colRef, {
+        await addDoc(colRef, {
             nickname: data.nickname,
             email: data.email,
             createdAt: serverTimestamp(),
             uid: uid,
-            lastLogin: 'never'
+            lastLogin: 'never',
+            friends: [],
+            chats: [],
         })
         return Response.json( 'User created. Verification email sent!' )
     } catch (error: any) {

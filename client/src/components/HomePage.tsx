@@ -5,7 +5,7 @@ import Phone from './Phone';
 import Features from './Features';
 import { useAuthContext } from '@/context/AuthContext';
 
-function Home() {
+function HomePage() {
     const { user }: any = useAuthContext();
 
     return (
@@ -23,4 +23,4 @@ function Home() {
   }
 
 
-export default Home
+export default HomePage
