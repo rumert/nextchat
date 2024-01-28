@@ -16,7 +16,9 @@ export async function POST(req: Request) {
         const userQ = query(usersRef, where("uid", "==", user.uid))
         const userSnap = await getDocs(userQ)
         const userRef = userSnap.docs[0].ref
+        const friendRef = friendSnap.docs[0].ref
         await updateDoc(userRef, {friends: arrayUnion(friendName)})
+        await updateDoc(friendRef, {friends: arrayUnion(user.displayName)})
 
         
         const doc = await addDoc(chatsRef, {
@@ -27,7 +29,7 @@ export async function POST(req: Request) {
         updateDoc(doc, {id: doc.id})
         //const messagesRef = collection(doc, 'messages')
 
-        return Response.json('added')
+        return Response.json({message: 'added', chatId: doc.id})
     } catch (err: any) {
         console.error('Error in POST handler:', err);
         return Response.json(err.message);

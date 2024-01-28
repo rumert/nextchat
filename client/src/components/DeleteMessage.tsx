@@ -3,13 +3,13 @@ import React from 'react'
 import { MdDelete } from "react-icons/md";
 
 
-export async function handleDelete(id: any) {
+export async function handleDelete({ mId, chatId }: any) {
     const res = await fetch('/api/deleteMessage', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json', 
       },
-      body: JSON.stringify({ id })
+      body: JSON.stringify( {mId, chatId} )
     })
     
 }

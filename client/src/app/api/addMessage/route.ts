@@ -2,9 +2,9 @@ import { db } from "../../../../lib/firebase/firebase";
 import { addDoc, collection, serverTimestamp, updateDoc } from "firebase/firestore"; 
 
 export async function POST(req: Request) {
-    const colRef: any = collection(db, "chats", "r5vcum1IsYJaDR6raOKK", "messages")
     try {
-        const text = await req.json()
+        const {text, chatId} = await req.json()
+        const colRef: any = collection(db, "chats", chatId, "messages")
         const docRef = await addDoc(colRef, {
             sender: "sender",
             text: text,

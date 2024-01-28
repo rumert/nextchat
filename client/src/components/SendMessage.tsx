@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 
-function SendMessage() {
+function SendMessage({ chatId }: any) {
 
   const [inputVal, setInputVal] = useState('')
 
@@ -15,7 +15,7 @@ function SendMessage() {
         headers: {
           'Content-type': 'application/json', 
         },
-        body: JSON.stringify( text )
+        body: JSON.stringify({ text, chatId })
       })
     }
     
