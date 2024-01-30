@@ -24,8 +24,11 @@ export default function Main() {
       })
       if (res.ok) {
         const ress = await res.json()
-        setResText(ress.message)
-        route.push(`/${ress.chatId}`)
+        if(ress.message == "added") {
+          route.push(`/${ress.chatId}`)
+        } else {
+          setResText(ress.message)
+        }
       } else {
         setResText('An error occured, please try again')
       }

@@ -1,9 +1,15 @@
-import { addDoc, collection, getDocs, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, updateDoc, where } from 'firebase/firestore'
 import { db } from './firebase'
 
-export async function getMessages(chatId: any) {
-    const colRef: any = collection(db, "chats", chatId, "messages")
-    const q = query( colRef, orderBy("createdAt") )
+export const usersRef: any = collection(db, "users")
+export const chatsRef: any = collection(db, "chats")
+
+export async function getMessages({ user, chatId }: any) {
+    const docRef: any = doc(db, "chats", chatId)
+    const chatDoc: any = await getDoc(docRef)
+    const p = chatDoc.data().participants
+    if (user.displayName != p[0] && user.displayName != p[1] ) {return 'no access'}
+    const q = query( collection(docRef, "messages"), orderBy("createdAt") )
     const snap: any = await getDocs(q)
     let messages: any = []
     snap.forEach((doc: any) => {
@@ -42,4 +48,41 @@ export async function getCircles(username: any) {
         }
     })
     return result 
+}
+
+export async function getSnap(nickname: any) {
+    const q: any = query(usersRef, where("nickname", "==", nickname))
+    return await getDocs(q)
+}
+
+export async function getUserData(snap: any) {
+    let data = {}
+    snap.forEach((doc: any) => {data = doc.data()})
+    return data
+}
+
+export function doesUserExist(friendSnap: any) {
+    if (friendSnap.empty) {
+        return false
+    } else {
+        return true
+    }
+}
+
+export async function isUserAlreadyFriend(currentUserData: any, friendName: any){
+    return currentUserData.friends.some((user: any) => user == friendName)
+}
+
+export async function addFriend({ currentUserSnap, currentUserName, friendSnap, friendName }: any) {
+    const currentUserRef = currentUserSnap.docs[0].ref
+    const friendRef = friendSnap.docs[0].ref
+    await updateDoc(currentUserRef, {friends: arrayUnion(friendName)})
+    await updateDoc(friendRef, {friends: arrayUnion(currentUserName)})
+    const doc = await addDoc(chatsRef, {
+        participants: arrayUnion(currentUserName, friendName),
+        createdAt: serverTimestamp(),
+        id: '',
+    })
+    updateDoc(doc, {id: doc.id})
+    return doc.id
 }
