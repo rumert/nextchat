@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
   .site {
     position: relative;
     min-height: 100%;
@@ -20,13 +19,14 @@
     left: 50%;
   }
   .phone {
-    --black5: #404040;
-    --black4: #505050;
+    --action-color: #F9A3A3;
+    --primary-color: #93839D;
+    --base-color: #7D799A;
     z-index: 1;
     width: 13rem;
     height: 24rem;
     padding: 0 0.5rem;
-    border: 0.25rem solid var(--black5);
+    border: 0.25rem solid var(--primary-color);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -43,12 +43,12 @@
     width: 4rem;
     margin: 1rem auto;
     border-radius: 999rem;
-    background-color: var(--black4);
+    background-color: var(--base-color);
   }
   .phone_screen {
     position: relative;
     flex: 1 0 auto;
-    background-color: #FFB6C1;
+    background-color: var(--primary-color);
     border-radius: 12px;
   }
   .phone_screen::before {
@@ -66,7 +66,7 @@
   .phone_button {
     width: 1.5rem;
     height: 1.5rem;
-    border: 2px solid var(--black4);
+    border: 2px solid var(--base-color);
     border-radius: 50%;
     margin: 1rem auto;
   }
@@ -75,8 +75,7 @@
     position: absolute;
     top: 3%;
     right: 12.5%;
-    background-color: #FF9FF3;
-    color: #808080;
+    background-color: var(--base-color);
     border-radius: 12px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

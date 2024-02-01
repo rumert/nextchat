@@ -3,10 +3,10 @@ import { addDoc, collection, serverTimestamp, updateDoc } from "firebase/firesto
 
 export async function POST(req: Request) {
     try {
-        const {text, chatId} = await req.json()
+        const {currentUserName, text, chatId} = await req.json()
         const colRef: any = collection(db, "chats", chatId, "messages")
         const docRef = await addDoc(colRef, {
-            sender: "sender",
+            sender: currentUserName,
             text: text,
             createdAt: serverTimestamp(),
             id: ''

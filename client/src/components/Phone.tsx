@@ -21,14 +21,14 @@ function Phone() {
     }, []);
 
   return (
-    <div className='bg-gradient-to-bl from-[#FF9FF3] to-[#D3D3D3] h-[85vh] p-4 rounded-xl '>
-        <div className='border-2 border-gray-400 h-full rounded-xl p-6'>
+    <div className='h-[85vh] p-4 rounded-xl'>
+        <div className='h-full rounded-xl p-6'>
             <div className="site">
                 <div className="phone" onClick={handlePhone}>
                     <div className="phone_mic"></div>
                     <div className="phone_screen">
                         <div className={`notification ${showNotification ? 'visible' : ''}`}>
-                            <div className=''>
+                            <div>
                             New Message!
                             </div>
                         </div>
@@ -39,7 +39,7 @@ function Phone() {
                         wrapper="span"
                         speed={75}
                         repeat={0}
-                        className='text-lg text-[#555555] absolute top-[30%] left-[12.5%]'
+                        className='text-lg absolute top-[30%] left-[12.5%]'
                         />
                     </div>
                     <div className="phone_button"></div>

@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from 'react'
 import { getMessagesSnapshot } from '../../lib/firebase/firestore';
 import DeleteMessage from './DeleteMessage';
+import { useAuthContext } from '@/context/AuthContext';
 
 
 function MessagesList({ initialMessages, chatId }: any) {
 
-    
+    const { user }: any = useAuthContext();
+    const currentUserName = user.displayName
     const [messages, setMessages] = useState(initialMessages)
 
     useEffect(() => {
@@ -21,19 +23,19 @@ function MessagesList({ initialMessages, chatId }: any) {
         return () => unsub
     }, [])
 
-    
-
   return (
     <div className='flex-grow flex flex-col pt-4 gap-2'>
         {messages.length != 0 && 
             messages.map( (m: any, index: number) => {
-            return <div className='ml-auto flex' key={index} >
-                    <DeleteMessage mId={m.id} chatId={chatId} />
-                    <div className='border-2 rounded-xl w-fit px-2'>
-                        {m.text}
-                    </div>
-                   </div>
-            })}
+                const isCurrentUserSender = (m.sender == currentUserName)
+                return (<div className = {isCurrentUserSender ? 'ml-auto flex' : 'mr-auto flex'} key={index} >
+                        {isCurrentUserSender && <DeleteMessage mId={m.id} chatId={chatId} />}
+                        <div className='border-2 rounded-xl w-fit px-2'>
+                            {m.text}
+                        </div>
+                       </div>)
+            })
+        }
     </div>
   )
 }

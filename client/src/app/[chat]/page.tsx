@@ -9,18 +9,18 @@ import { useAuthContext } from "@/context/AuthContext";
 
 export default function page({ params }: any) {
   
-  const chatId = params.chat
-  const { user }: any = useAuthContext();
   const router = useRouter()
+  const { user }: any = useAuthContext();
+  if (!user) {router.push('/')}
+  const currentUserName = user.displayName
+  const chatId = params.chat
   const [messages, setMessages] = useState([]);
   const [haveAccess, setHaveAccess] = useState(false)
-
-  if (!user) {router.push('/')}
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const data = await getMessages({ user, chatId });
+        const data = await getMessages({ currentUserName, chatId });
         if (data == 'no access') {
           router.push('/')
         } else {

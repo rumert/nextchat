@@ -3,22 +3,20 @@ import { useAuthContext } from '@/context/AuthContext';
 import { signOut } from 'firebase/auth';
 import Image from 'next/image'
 import Link from 'next/link';
-import { useState } from 'react';
 import { auth } from '../../lib/firebase/firebase';
 
 
 function Navbar() {
 
   const { user }: any = useAuthContext()
-  const [userr, setUserr]: any = useState(user)
 
   function handleLogOut() {
     signOut(auth)
   }
 
   return (
-    <div className='pr-4 pl-8'>
-      <div className='flex justify-between items-center h-12 my-4' >
+    <div className='px-8'>
+      <div className='flex justify-between items-center h-12 pt-12 pb-8' >
         <Link href='/' className='h-12 w-12 relative'>
           <Image
             src="/logo.svg"
@@ -28,10 +26,12 @@ function Navbar() {
         </Link>
         <button onClick={handleLogOut}>log out</button>
         {!user ? 
-        <Link href="/register" className='block h-[75%] border rounded-xl shadow-md py-[1.5%]'>
-          <div className=''>GET STARTED</div>
+        <Link href="/register" className='bg-action-color text-base-color p-2 rounded-xl'>
+          <div>REGISTER</div>
         </Link> :
-        <Link href = '/' >{user.displayName}</Link>
+        <Link href = '/' className='bg-action-color text-base-color p-2 rounded-xl'>
+          <div>{user.displayName}</div>
+        </Link>
         }
       </div>
     </div>

@@ -4,13 +4,26 @@ import { db } from './firebase'
 export const usersRef: any = collection(db, "users")
 export const chatsRef: any = collection(db, "chats")
 
-export async function getMessages({ user, chatId }: any) {
-    const docRef: any = doc(db, "chats", chatId)
+export async function getSnap(nickname: any) {
+    const q: any = query(usersRef, where("nickname", "==", nickname))
+    return await getDocs(q)
+}
+
+export async function getUserData(snap: any) {
+    let data = {}
+    snap.forEach((doc: any) => {data = doc.data()})
+    return data
+}
+
+export async function getMessages({ currentUserName, chatId }: any) {
+    const docRef: any = doc(chatsRef, chatId)
     const chatDoc: any = await getDoc(docRef)
     const p = chatDoc.data().participants
-    if (user.displayName != p[0] && user.displayName != p[1] ) {return 'no access'}
+    if (currentUserName != p[0] && currentUserName != p[1] ) {return 'no access'}
+
     const q = query( collection(docRef, "messages"), orderBy("createdAt") )
     const snap: any = await getDocs(q)
+    
     let messages: any = []
     snap.forEach((doc: any) => {
         const data = doc.data()
@@ -21,9 +34,7 @@ export async function getMessages({ user, chatId }: any) {
 
 export async function getMessagesSnapshot(callback: Function, chatId: any) {
 
-    const colRef: any = collection(db, "chats", chatId, "messages")
-    //const a = await getDocs(colRef)
-    //if (!a.docs[0]) {await addDoc(colRef, {})}
+    const colRef: any = collection(chatsRef, chatId, "messages")
     const q = query( colRef, orderBy('createdAt') )
     const mesSnap = onSnapshot(q, (snap: any) => {
         const results = snap.docs.map((doc: any) => {
@@ -38,8 +49,7 @@ export async function getMessagesSnapshot(callback: Function, chatId: any) {
 
 export async function getCircles(username: any) {
     const result: any = []
-    const colRef: any = collection(db, "chats")
-    const q = query( colRef, where("participants", "array-contains", username) )
+    const q = query( chatsRef, where("participants", "array-contains", username) )
     const snap: any = await getDocs(q)
     snap.forEach((doc: any) => {
         const data = doc.data()
@@ -48,25 +58,6 @@ export async function getCircles(username: any) {
         }
     })
     return result 
-}
-
-export async function getSnap(nickname: any) {
-    const q: any = query(usersRef, where("nickname", "==", nickname))
-    return await getDocs(q)
-}
-
-export async function getUserData(snap: any) {
-    let data = {}
-    snap.forEach((doc: any) => {data = doc.data()})
-    return data
-}
-
-export function doesUserExist(friendSnap: any) {
-    if (friendSnap.empty) {
-        return false
-    } else {
-        return true
-    }
 }
 
 export async function isUserAlreadyFriend(currentUserData: any, friendName: any){

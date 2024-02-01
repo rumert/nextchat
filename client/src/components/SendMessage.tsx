@@ -1,8 +1,11 @@
 'use client'
+import { useAuthContext } from '@/context/AuthContext';
 import React, { useState } from 'react'
 
 function SendMessage({ chatId }: any) {
 
+  const { user }: any = useAuthContext();
+  const currentUserName = user.displayName
   const [inputVal, setInputVal] = useState('')
 
   async function handleSubmit(e: any){
@@ -15,7 +18,7 @@ function SendMessage({ chatId }: any) {
         headers: {
           'Content-type': 'application/json', 
         },
-        body: JSON.stringify({ text, chatId })
+        body: JSON.stringify({ currentUserName, text, chatId })
       })
     }
     

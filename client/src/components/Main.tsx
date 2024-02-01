@@ -5,10 +5,12 @@ import Circles from "./Circles";
 import { useRouter } from "next/navigation";
 
 export default function Main() {
-  const [addFriend, setAddFriend] = useState('')
-  const { user }: any = useAuthContext();
-  const [resText, setResText]: any = useState(null)
   const route = useRouter()
+  const { user }: any = useAuthContext();
+  const currentUserName = user.displayName
+  const [addFriend, setAddFriend] = useState('')
+  const [resText, setResText]: any = useState(null)
+  
 
   async function handleAddFriend(e: any) {
     e.preventDefault()
@@ -20,7 +22,7 @@ export default function Main() {
         headers: {
           'Content-type': 'application/json', 
         },
-        body: JSON.stringify( { user, friendName } )
+        body: JSON.stringify( { currentUserName, friendName } )
       })
       if (res.ok) {
         const ress = await res.json()

@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-base-color text-my-text-color`}>
         
         {/* Wrap the children with the AuthContextProvider to provide authentication context */}
         <AuthContextProvider>
