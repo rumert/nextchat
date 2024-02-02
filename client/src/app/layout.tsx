@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Poor_Story } from 'next/font/google'
 import './globals.css'
 
 //components
 import Navbar from '@/components/Navbar'
-import RedirectLogin from '@/components/RedirectLogin'
 import { AuthContextProvider } from '@/context/AuthContext'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Poor_Story({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -24,7 +23,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthContextProvider>
           <Navbar />
           {children}
-          <RedirectLogin />
         </AuthContextProvider>  
 
       </body>

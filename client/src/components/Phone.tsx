@@ -27,7 +27,7 @@ function Phone() {
                 <div className="phone" onClick={handlePhone}>
                     <div className="phone_mic"></div>
                     <div className="phone_screen">
-                        <div className={`notification ${showNotification ? 'visible' : ''}`}>
+                        <div className="notification">
                             <div>
                             New Message!
                             </div>
@@ -39,7 +39,7 @@ function Phone() {
                         wrapper="span"
                         speed={75}
                         repeat={0}
-                        className='text-lg absolute top-[30%] left-[12.5%]'
+                        className='text-lg absolute top-[40%] left-[10%]'
                         />
                     </div>
                     <div className="phone_button"></div>

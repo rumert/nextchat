@@ -15,7 +15,7 @@ function Navbar() {
   }
 
   return (
-    <div className='px-8'>
+    <div className='px-8 text-lg'>
       <div className='flex justify-between items-center h-12 pt-12 pb-8' >
         <Link href='/' className='h-12 w-12 relative'>
           <Image
@@ -24,9 +24,9 @@ function Navbar() {
             fill={true}
           />
         </Link>
-        <button onClick={handleLogOut}>log out</button>
+        <button onClick={handleLogOut}>Log Out</button>
         {!user ? 
-        <Link href="/register" className='bg-action-color text-base-color p-2 rounded-xl'>
+        <Link href="/register" className='bg-action-color text-base-color p-2 rounded-xl shadow-lg'>
           <div>REGISTER</div>
         </Link> :
         <Link href = '/' className='bg-action-color text-base-color p-2 rounded-xl'>

@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+  html{
+    --action-color: #F9A3A3;
+    --primary-color: #93839D;
+    --base-color: #7D799A;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  input {
+    border-radius: 8px;
+  }
+
+  input:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+
   .site {
     position: relative;
     min-height: 100%;
@@ -19,9 +47,6 @@
     left: 50%;
   }
   .phone {
-    --action-color: #F9A3A3;
-    --primary-color: #93839D;
-    --base-color: #7D799A;
     z-index: 1;
     width: 13rem;
     height: 24rem;
@@ -74,18 +99,23 @@
   .notification {
     position: absolute;
     top: 3%;
-    right: 12.5%;
+    right: 22.5%;
     background-color: var(--base-color);
     border-radius: 12px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     opacity: 0;
-    transition: opacity 0.5s, transform 0.5s;
-    transform: translateY(-100%);
+    animation: myAnim 2s;
+    animation-iteration-count: infinite;
   }
-  
-  .notification.visible {
-    opacity: 1;
-    transform: translateY(0);
+
+  @keyframes myAnim {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  
