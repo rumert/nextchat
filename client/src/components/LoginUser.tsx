@@ -5,22 +5,23 @@ import Link from 'next/link'
 import signInEmPass from '../../lib/firebase/auth'
 
 function LoginUser() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, setError]: any = useState(null)
     const router: any = useRouter()
+    const [formData, setFormData]: any = useState({      
+      email: '',
+      password: '',      
+      error: null
+    })
 
     async function handleLogin(e: any) {
         e.preventDefault()
-        const { result, error }: any = await signInEmPass(email, password)
+        const { result, error }: any = await signInEmPass(formData.email, formData.password)
         if ( error ) {
           // Display and log any sign-in errors
           console.log( error );
-          setError(error)
+          setFormData( (prevData: any) => ({ ...prevData, error: error }) )
           return;
         }
-        else { 
-          //console.log(result)
+        else {           
           router.push('/')
         }
     }
@@ -30,8 +31,8 @@ function LoginUser() {
       <input 
         type="email" 
         id='email' 
-        value={email}
-        onChange={e => setEmail(e.target.value)} 
+        value={formData.email}
+        onChange={e => setFormData( (prevData: any) => ({ ...prevData, email: e.target.value }) )} 
         className='border-2 mb-4 pl-4 w-full h-10' 
         placeholder='EMAIL'
         required
@@ -41,15 +42,15 @@ function LoginUser() {
         type="password" 
         id='password'
         minLength={6}
-        value={password} 
-        onChange={e => setPassword(e.target.value)}
+        value={formData.password} 
+        onChange={e => setFormData( (prevData: any) => ({ ...prevData, password: e.target.value }) )}
         className='border-2 mb-4 pl-4 w-full h-10'
         placeholder='PASSWORD'
         required
       />
 
       <button type='submit' className='w-full h-10 bg-gradient-to-r from-action-color to-[#FCC3C3] border-2 border-primary-color text-my-text-color rounded-2xl mb-2'>LOGIN</button>
-      { error && <p className='text-my-text-color'>{error}</p> }
+      { formData.error && <p className='text-primary-color'>{formData.error}</p> }
       <p className='inline text-my-text-color pl-2'>Don't have an Account? </p>
       <Link href='/register' className='text-action-color underline mb-2'>Sign up!</Link>
 

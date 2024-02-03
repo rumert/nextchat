@@ -4,14 +4,17 @@ import { signOut } from 'firebase/auth';
 import Image from 'next/image'
 import Link from 'next/link';
 import { auth } from '../../lib/firebase/firebase';
+import { useRouter } from 'next/navigation';
 
 
 function Navbar() {
 
+  const router = useRouter()
   const { user }: any = useAuthContext()
 
   function handleLogOut() {
     signOut(auth)
+    router.push('/')
   }
 
   return (

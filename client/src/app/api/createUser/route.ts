@@ -8,7 +8,8 @@ export async function POST(req: Request) {
     try {
         const data = await req.json()
 
-        const snap: any = getSnap(data.nickname)
+        const snap: any = await getSnap(data.nickname)
+        console.log(snap)
         if(!snap.empty) {return Response.json( 'Nickname already in use' )}
 
         const user: any = await signUpEmPass(data.email, data.password)

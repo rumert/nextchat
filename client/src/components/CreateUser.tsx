@@ -1,34 +1,62 @@
 'use client'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 function CreateUser() {
 
-    const [nickname, setNickname] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [repPassword, setRepPassword] = useState('')
-    const [result, setResult]: any = useState('')
+    const router = useRouter()
+    const [formData, setFormData]: any = useState({
+      nickname: '',
+      email: '',
+      password: '',
+      repPassword: '',
+      result: ''
+    })
 
     async function handleRegister(e: any) {
-        e.preventDefault()
-        if (password != repPassword) {
-          setResult('Passwords do not match')
-        } else {
-          const res: any = await fetch('/api/createUser', {
-            method: 'POST',
-            headers: {
-              'Content-type': 'application/json', 
-            },
-            body: JSON.stringify( { nickname, email, password } )
+      e.preventDefault()
+      if (formData.password != formData.repPassword) {
+        setFormData( (prevData: any) => ({ ...prevData, result: 'Passwords do not match' }) )
+      } else {
+        setFormData((prevData: any) => ({ ...prevData, result: 'please wait... '}))
+        const res: any = await fetch('/api/createUser', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json', 
+          },
+          body: JSON.stringify({ 
+            nickname: formData.nickname,
+            email: formData.email,
+            password: formData.password 
           })
-          const resMes = await res.json();
-          res.ok ? setResult(resMes) : setResult('An error occured, please try again')
-          setNickname('')
-          setEmail('')
-          setPassword('')
-          setRepPassword('')
-        } 
+        })
+        const resMes = await res.json();
+        if (res.ok) {
+          if (resMes == 'User created. Verification email sent!') {
+            setFormData({
+              nickname: '',
+              email: '',
+              password: '',
+              repPassword: '',
+              result: resMes
+            })
+            setTimeout(() => {
+              router.push('/login');
+            }, 1000);
+          } else {
+            setFormData((prevData: any) => ({ ...prevData, result: resMes }))
+          }            
+        } else {
+          setFormData({
+            nickname: '',
+            email: '',
+            password: '',
+            repPassword: '',
+            result: 'An error occured, please try again'
+          })
+        }              
+      } 
     }
 
   return (
@@ -37,8 +65,8 @@ function CreateUser() {
       <input 
         type="text" 
         id='nickname' 
-        value={nickname}
-        onChange={e => setNickname(e.target.value)} 
+        value={formData.nickname}
+        onChange={e => setFormData((prevData: any) => ({ ...prevData, nickname: e.target.value}))} 
         className='border-2 mb-4 pl-4 w-full h-10' 
         placeholder='NICKNAME'
         required
@@ -47,8 +75,8 @@ function CreateUser() {
       <input 
         type="email" 
         id='email' 
-        value={email}
-        onChange={e => setEmail(e.target.value)} 
+        value={formData.email}
+        onChange={e => setFormData((prevData: any) => ({ ...prevData, email: e.target.value}))} 
         className='border-2 block mb-4 pl-4 w-full h-10' 
         placeholder='EMAIL'
         required
@@ -58,8 +86,8 @@ function CreateUser() {
         type="password" 
         id='password'
         minLength={6}
-        value={password} 
-        onChange={e => setPassword(e.target.value)}
+        value={formData.password} 
+        onChange={e => setFormData((prevData: any) => ({ ...prevData, password: e.target.value}))}
         className='border-2 block mb-4 pl-4 w-full h-10'
         placeholder='PASSWORD'
         required
@@ -69,18 +97,17 @@ function CreateUser() {
         type="password" 
         id='repPassword'
         minLength={6}
-        value={repPassword} 
-        onChange={e => setRepPassword(e.target.value)}
+        value={formData.repPassword} 
+        onChange={e => setFormData((prevData: any) => ({ ...prevData, repPassword: e.target.value}))}
         className='border-2 block mb-4 pl-4 w-full h-10'
         placeholder='REPEAT YOUR PASSWORD'
         required
       />
 
       <button type='submit' className='w-full h-10 bg-gradient-to-r from-action-color to-[#FCC3C3] border-2 border-primary-color text-my-text-color rounded-2xl mb-2'>CREATE</button>
-      {<p className='text-my-text-color'>{result}</p>}
+      <p className={formData.result === 'User created. Verification email sent!' ? 'text-action-color' : 'text-primary-color'}> {formData.result} </p>
       <p className='inline text-my-text-color pl-4'>Or already </p>
       <Link href='/login' className='text-action-color underline mb-2'>have an account?</Link>
-
     </form>
   )
 }
