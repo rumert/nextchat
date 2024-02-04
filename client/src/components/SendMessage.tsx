@@ -27,11 +27,11 @@ function SendMessage({ chatId }: any) {
     <form onSubmit={handleSubmit} className='h-[10%] flex'>
       <input 
           type="text" 
-          className='h-full w-[80%] border-2'
+          className='h-full w-[80%] border-2 text-primary-color'
           value={inputVal}
           onChange={e => setInputVal(e.target.value)}
       /> 
-      <button type='submit' className='flex-grow border-2'>SEND</button>
+      <button type='submit' className='flex-grow border-2 rounded-2xl'>SEND</button>
     </form>
   )
 }

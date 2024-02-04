@@ -9,7 +9,7 @@ export async function handleDelete({ mId, chatId }: any) {
       headers: {
         'Content-type': 'application/json', 
       },
-      body: JSON.stringify( {mId, chatId} )
+      body: JSON.stringify({ mId, chatId })
     })
     
 }

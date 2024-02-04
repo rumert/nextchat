@@ -3,6 +3,7 @@ import { useAuthContext } from '@/context/AuthContext';
 import React, { useEffect, useState } from 'react'
 import { getCircles } from '../../lib/firebase/firestore';
 import Link from 'next/link';
+import LogOutUser from './LogOutUser';
 
 
 function Circles() {
@@ -17,17 +18,27 @@ function Circles() {
       setCircles(data)
     }
     gettingCircles()
+
   }, [])
   
   return (
-    <div className='h-[11vh] border-2 rounded-2xl flex gap-2 pl-4 items-center'>
+    <div className='flex'>
 
-      {circles.length != 0 && 
-        circles.map( (circle: any, index: number) => {
-        return <Link href={`/${circle.id}`} key={index} className='h-[10vh] w-[10vh] bg-gray-800 rounded-full'>
-                  {circle.name}
-                </Link>
-      })}
+      <div className='h-[11vh] w-[20vw] mr-[1vw]'>
+        <LogOutUser className={'bg-action-color text-primary-color w-full h-[50%] rounded-2xl'} />
+        <Link href='/'>
+          <div className='bg-action-color text-primary-color w-full h-[50%] rounded-2xl flex items-center justify-center'> Add a Friend </div>
+        </Link>
+      </div>
+
+      <div className='h-[11vh] w-[79vw] border-2 rounded-2xl flex items-center'>
+        {circles.length != 0 && 
+          circles.map( (circle: any, index: number) => {
+          return  <Link href={`/${circle.id}`} key={index} className='px-1 h-full'>
+                    <div className='h-full aspect-square rounded-full bg-action-color text-primary-color flex items-center justify-center'>{circle.name}</div>
+                  </Link>
+        })}
+      </div>
 
     </div>
   )

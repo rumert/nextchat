@@ -5,6 +5,7 @@ import Phone from './Phone';
 import Features from './Features';
 import { useAuthContext } from '@/context/AuthContext';
 import RedirectLogin from './RedirectLogin';
+import Navbar from './Navbar';
 
 function HomePage() {
     const { user }: any = useAuthContext();
@@ -15,6 +16,7 @@ function HomePage() {
           <Main />
         ) : (
           <>
+            <Navbar />
             <Phone />
             <Features />
             <RedirectLogin />

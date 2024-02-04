@@ -11,7 +11,7 @@ function MessagesList({ initialMessages, chatId }: any) {
     const { user }: any = useAuthContext();
     const currentUserName = user.displayName
     const [messages, setMessages] = useState(initialMessages)
-    //const [isMesMenuActive, s]
+    const [buttonsVisibility, setButtonsVisibility]: any = useState({})
 
     useEffect(() => {
         const unsub: any = getMessagesSnapshot( (mes: any) => {
@@ -25,22 +25,26 @@ function MessagesList({ initialMessages, chatId }: any) {
         return () => unsub
     }, [])
 
-    function handleToggleMesMenu(m: any) {
-        console.log('clicked')
+    function handleToggleMesMenu(messageId: any) {
+        setButtonsVisibility((prevVisibility: any) => ({
+            ...prevVisibility,
+            [messageId]: !prevVisibility[messageId]
+        }))
     }
 
   return (
-    <div className='flex-grow flex flex-col pt-4 gap-2'>
+    <div className='flex-grow flex flex-col p-4 gap-2'>
         {messages.length != 0 && 
             messages.map( (m: any, index: number) => {
                 const isCurrentUserSender = (m.sender == currentUserName)
                 return (<div className = {isCurrentUserSender ? 'ml-auto flex relative group' : 'mr-auto flex'} key={index} >
-                            {isCurrentUserSender && <DeleteMessage mId={m.id} chatId={chatId} />}
-                            <div className={`border-2 rounded-xl w-fit px-2 ${isCurrentUserSender ? 'bg-my-text-color text-primary-color' : 'bg-primary-color'}`}>
+                            {isCurrentUserSender && buttonsVisibility[m.id] && 
+                                <DeleteMessage mId={m.id} chatId={chatId} />}
+                            <div className={`rounded-xl w-fit px-2 ${isCurrentUserSender ? 'bg-my-text-color text-primary-color' : 'bg-primary-color'}`}>
                                 {m.text}
                             </div>
                             {isCurrentUserSender && ( 
-                            <button className='hidden group-hover:block absolute right-0 h-full ' onClick={() => handleToggleMesMenu(m)}>
+                            <button className='hidden group-hover:block absolute right-0 h-full ' onClick={() => handleToggleMesMenu(m.id)}>
                                 <FaCaretLeft className='text-primary-color text-2xl' />   
                             </button>                                                             
                             )}

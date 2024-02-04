@@ -34,10 +34,10 @@ export default function page({ params }: any) {
 
     fetchMessages();
   }, []);
-  
   return (
 
-    <div className='flex-grow flex flex-col h-[88vh]'>
+    <div className='flex-grow flex flex-col h-screen'>
+
         <Circles />
         { haveAccess &&
         <div className='flex-grow flex flex-col'>
@@ -47,8 +47,6 @@ export default function page({ params }: any) {
         }
         
     </div>
-    
-    
-    
+            
   )
 }

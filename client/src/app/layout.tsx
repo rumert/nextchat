@@ -3,7 +3,6 @@ import { Poor_Story } from 'next/font/google'
 import './globals.css'
 
 //components
-import Navbar from '@/components/Navbar'
 import { AuthContextProvider } from '@/context/AuthContext'
 
 const inter = Poor_Story({ subsets: ['latin'], weight: '400' })
@@ -21,7 +20,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         
         {/* Wrap the children with the AuthContextProvider to provide authentication context */}
         <AuthContextProvider>
-          <Navbar />
           {children}
         </AuthContextProvider>  
 
