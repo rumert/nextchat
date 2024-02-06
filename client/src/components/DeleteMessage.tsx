@@ -16,7 +16,7 @@ export async function handleDelete({ mId, chatId }: any) {
 
 function DeleteMessage(id: any) {
   return (
-    <button onClick={() => handleDelete(id)} className='inline text-xl'><MdDelete /></button>
+    <button onClick={() => handleDelete(id)} className='rounded-xl bg-primary-color inline text-xl text-my-text-color'><MdDelete /></button>
   )
 }
 

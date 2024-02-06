@@ -35,22 +35,25 @@ function MessagesList({ initialMessages, chatId }: any) {
   return (
     <div className='flex-grow flex flex-col p-4 gap-2'>
         {messages.length != 0 && 
-            messages.map( (m: any, index: number) => {
-                const isCurrentUserSender = (m.sender == currentUserName)
-                return (<div className = {isCurrentUserSender ? 'ml-auto flex relative group' : 'mr-auto flex'} key={index} >
-                            {isCurrentUserSender && buttonsVisibility[m.id] && 
-                                <DeleteMessage mId={m.id} chatId={chatId} />}
-                            <div className={`rounded-xl w-fit px-2 ${isCurrentUserSender ? 'bg-my-text-color text-primary-color' : 'bg-primary-color'}`}>
-                                {m.text}
-                            </div>
-                            {isCurrentUserSender && ( 
-                            <button className='hidden group-hover:block absolute right-0 h-full ' onClick={() => handleToggleMesMenu(m.id)}>
-                                <FaCaretLeft className='text-primary-color text-2xl' />   
-                            </button>                                                             
-                            )}
-                       </div>)
-            })
-        }
+        messages.map( (m: any, index: number) => {
+        const isCurrentUserSender = (m.sender == currentUserName)
+        return (<div className = {isCurrentUserSender ? 'ml-auto flex relative group' : 'mr-auto flex'} key={index} >
+                            
+                    {isCurrentUserSender && buttonsVisibility[m.id] && 
+                    <DeleteMessage mId={m.id} chatId={chatId} />}
+
+                    <p className={`rounded-xl h-7  z-20 px-2 ${isCurrentUserSender ? 'bg-action-color' : 'bg-primary-color'}`}>
+                        {m.text}
+                    </p>
+
+                    {isCurrentUserSender && ( 
+                    <button className='hidden group-hover:block absolute right-0 h-full ' onClick={() => handleToggleMesMenu(m.id)}>
+                        <FaCaretLeft className='rounded-xl bg-primary-color text-my-text-color text-2xl' />   
+                    </button>                                                             
+                    )}
+
+                </div>)
+        })}
     </div>
   )
 }

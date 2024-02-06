@@ -38,18 +38,18 @@ export default function Main() {
   }
 
   return (
-    <div className='flex-grow flex flex-col h-[88vh]'>
+    <div className='flex-grow flex flex-col h-screen'>
       <Circles />
       <form onSubmit={handleAddFriend} className="flex-grow flex flex-col items-center justify-center gap-2">
         <input 
           type="text" 
-          className='w-32 border-2'
+          className='w-32 border-2 text-primary-color'
           value={addFriend}
           onChange={e => setAddFriend(e.target.value)}
         />
         {resText && <p>{resText}</p>} 
-        <button type='submit' className="border-2 border-purple-600 bg-purple-400">Add a new friend</button>
-      </form>
+        <button type='submit' className="border-2 px-1">Add a new friend</button>
+      </form>      
     </div>
   )
 }

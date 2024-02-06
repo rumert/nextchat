@@ -3,9 +3,11 @@
 @tailwind utilities;
 
   html{
-    --action-color: #F9A3A3;
-    --primary-color: #93839D;
-    --base-color: #7D799A;
+    --action-color: #262045;
+    --primary-color: #4F298B;
+    --base-color1: #4A297F;
+    --base-color2: #1A1E2E;
+    --my-text-color: #eaeaea;
   }
 
   ::-webkit-scrollbar {
@@ -26,8 +28,8 @@
   }
 
   input:focus {
-    outline: 3px solid var(--primary-color);
-    outline-offset: 2px;
+    outline: 2px solid var(--primary-color);
+    outline-offset: 1px;
   }
 
   .site {
@@ -55,7 +57,7 @@
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
-    background-color: #eaeaea;
+    background-color: var(--my-text-color);
     box-shadow: 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
     transition: all 0.3s;
   }

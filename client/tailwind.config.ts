@@ -9,9 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "action-color": "#F9A3A3",
-        "primary-color": "#93839D",
-        "base-color": "#7D799A",
+        "action-color": "#262045",
+        "primary-color": "#4F298B",
+        "base-color-1": "#4A297F",
+        "base-color-2": "#1A1E2E",
         "my-text-color": "#eaeaea"
       },
     },
