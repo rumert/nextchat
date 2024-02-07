@@ -57,7 +57,7 @@
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
-    background-color: var(--my-text-color);
+    background-color: var(--primary-color);
     box-shadow: 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
     transition: all 0.3s;
   }

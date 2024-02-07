@@ -16,7 +16,12 @@ export async function handleDelete({ mId, chatId }: any) {
 
 function DeleteMessage(id: any) {
   return (
-    <button onClick={() => handleDelete(id)} className='rounded-xl bg-primary-color inline text-xl text-my-text-color'><MdDelete /></button>
+    <button
+      onClick={() => handleDelete(id)} 
+      className='flex items-center justify-center text-xl h-full aspect-square rounded-full bg-action-color'
+    >
+      <MdDelete />
+    </button>
   )
 }
 

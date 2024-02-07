@@ -33,26 +33,30 @@ function MessagesList({ initialMessages, chatId }: any) {
     }
 
   return (
-    <div className='flex-grow flex flex-col p-4 gap-2'>
+    <div className='flex-grow flex flex-col gap-2 px-4'>
         {messages.length != 0 && 
         messages.map( (m: any, index: number) => {
-        const isCurrentUserSender = (m.sender == currentUserName)
-        return (<div className = {isCurrentUserSender ? 'ml-auto flex relative group' : 'mr-auto flex'} key={index} >
+            const isCurrentUserSender = (m.sender == currentUserName)
+            return  (<div className = {isCurrentUserSender ? 'ml-auto w-fit flex justify-end relative group gap-4' : 'mr-auto flex'} key={index} >
                             
-                    {isCurrentUserSender && buttonsVisibility[m.id] && 
-                    <DeleteMessage mId={m.id} chatId={chatId} />}
+                        {isCurrentUserSender && buttonsVisibility[m.id] && 
+                        <DeleteMessage mId={m.id} chatId={chatId} />}
 
-                    <p className={`rounded-xl h-7  z-20 px-2 ${isCurrentUserSender ? 'bg-action-color' : 'bg-primary-color'}`}>
-                        {m.text}
-                    </p>
+                        {isCurrentUserSender && !buttonsVisibility[m.id] &&
+                        <div className='h-full w-7'></div>
+                        }
 
-                    {isCurrentUserSender && ( 
-                    <button className='hidden group-hover:block absolute right-0 h-full ' onClick={() => handleToggleMesMenu(m.id)}>
-                        <FaCaretLeft className='rounded-xl bg-primary-color text-my-text-color text-2xl' />   
-                    </button>                                                             
-                    )}
+                        <div className={`rounded-xl h-7 ${isCurrentUserSender ? 'bg-base-color' : 'bg-primary-color'}`}>
+                            <p>{m.text}</p>
+                        </div>                        
 
-                </div>)
+                        {isCurrentUserSender &&
+                        <button className='hidden group-hover:block absolute right-0 h-full' onClick={() => handleToggleMesMenu(m.id)}>
+                            <FaCaretLeft className='rounded-xl bg-action-color text-2xl z-10' />   
+                        </button>                                                             
+                        }
+
+                    </div>)
         })}
     </div>
   )
