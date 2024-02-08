@@ -21,7 +21,7 @@ function Phone() {
     }, []);
 
   return (
-    <div className='h-[85vh] p-4 rounded-xl'>
+    <div className='h-[85vh] p-4 rounded-xl bg-homepage_background_1 bg-no-repeat bg-cover'>
         <div className='h-full rounded-xl p-6'>
             <div className="site">
                 <div className="phone" onClick={handlePhone}>

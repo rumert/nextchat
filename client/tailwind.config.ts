@@ -6,14 +6,30 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  theme: {
-    extend: {
+  theme: {    
+    extend: {  
+      backgroundImage: {
+        'homepage_background_1': "url('/Homepage-background-1.svg')",
+        'homepage_background_2': "url('/Homepage-background-2.svg')",
+        'chat_background': "url('/chat-background.svg')",
+      },   
       colors: {
-        "action-color": "#C86AB4",
+        "action-color-1": "#C86AB4",
+        "action-color-2": "#B3429A",
         "primary-color": "#4F298B",
-        "base-color": "#8156C8",
-        "my-text-color": "#eaeaea"
+        "base-color-1": "#8156C8",
+        "base-color-2": "#6337A9",        
+        "my-text-color": "#eaeaea",
+        "gray-1": "#2F3241",
+        "gray-2": "#717898"
       },
+      dropShadow: {
+        '3xl': '0 35px 35px rgba(0, 0, 0, 0.25)',
+        '4xl': [
+            '0 35px 35px rgba(0, 0, 0, 0.25)',
+            '0 45px 65px rgba(0, 0, 0, 0.15)'
+        ]
+      }
     },
   },
   plugins: [],

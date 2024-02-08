@@ -2,33 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-  html{
-    --action-color: #262045;
+  *{
+    --action-color-1: #C86AB4;
+    --action-color-2: #B3429A;    
     --primary-color: #4F298B;
-    --base-color1: #4A297F;
-    --base-color2: #1A1E2E;
+    --base-color-1: #8156C8;
+    --base-color-2: #6337A9;
     --my-text-color: #eaeaea;
+    --gray-1: #2F3241;
+    --gray-2: #717898;
   }
 
   ::-webkit-scrollbar {
     width: 10px;
+    background-color: var(--gray-2);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--base-color-2);
     border-radius: 5px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--base-color-1);
   }
 
   input {
     border-radius: 8px;
+    @apply border-2 border-base-color-2 bg-gradient-to-r from-base-color-1 to-base-color-2 drop-shadow-4xl;
+  }
+
+  button {
+    @apply bg-gradient-to-r from-action-color-1 to-action-color-2 border-2 border-action-color-2 drop-shadow-4xl;
   }
 
   input:focus {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid var(--action-color-1);
     outline-offset: 1px;
   }
 
@@ -53,11 +62,11 @@
     width: 13rem;
     height: 24rem;
     padding: 0 0.5rem;
-    border: 0.25rem solid var(--primary-color);
+    border: 0.25rem solid var(--gray-1);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
-    background-color: var(--primary-color);
+    background-color: var(--gray-2);
     box-shadow: 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
     transition: all 0.3s;
   }
@@ -70,12 +79,12 @@
     width: 4rem;
     margin: 1rem auto;
     border-radius: 999rem;
-    background-color: var(--base-color);
+    background-color: var(--gray-1);
   }
   .phone_screen {
     position: relative;
     flex: 1 0 auto;
-    background-color: var(--primary-color);
+    background-color: var(--gray-1);
     border-radius: 12px;
   }
   .phone_screen::before {
@@ -93,7 +102,7 @@
   .phone_button {
     width: 1.5rem;
     height: 1.5rem;
-    border: 2px solid var(--base-color);
+    border: 2px solid var(--gray-1);
     border-radius: 50%;
     margin: 1rem auto;
   }
@@ -102,7 +111,7 @@
     position: absolute;
     top: 3%;
     right: 22.5%;
-    background-color: var(--base-color);
+    background-color: var(--gray-2);
     border-radius: 12px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

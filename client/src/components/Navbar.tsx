@@ -21,7 +21,7 @@ function Navbar() {
         </Link>
         <LogOutUser />
         {!user ? 
-        <Link href="/register" className='bg-action-color text-base-color p-2 rounded-xl shadow-lg'>
+        <Link href="/register" className='bg-gradient-to-r from-action-color-2 to-action-color-1 text-base-color p-2 rounded-xl shadow-lg'>
           <div>REGISTER</div>
         </Link> :
         <Link href = '/' className='bg-action-color text-base-color p-2 rounded-xl'>

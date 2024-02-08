@@ -39,17 +39,17 @@ export default function Main() {
 
   return (
     <div className=''>
-      <div className="bg-[url('/background.svg')] bg-no-repeat bg-cover flex flex-col h-screen">
+      <div className="bg-[url('/chat-background.svg')] bg-no-repeat bg-cover flex flex-col h-screen">
         <Circles />
-        <form onSubmit={handleAddFriend} className="flex-grow flex flex-col items-center justify-center gap-2">
+        <form onSubmit={handleAddFriend} className="flex-grow flex flex-col items-center justify-center gap-2 drop-shadow-4xl">
           <input 
             type="text" 
-            className='w-32 border-2 text-primary-color'
+            className='w-32 border-2 bg-gradient-to-r from-base-color-1 to-base-color-2'
             value={addFriend}
             onChange={e => setAddFriend(e.target.value)}
           />
           {resText && <p>{resText}</p>} 
-          <button type='submit' className="border-2 px-1">Add a new friend</button>
+          <button type='submit' className="border-2 px-1 bg-gradient-to-r from-action-color-1 to-action-color-2">Add a new friend</button>
         </form> 
       </div>           
     </div>

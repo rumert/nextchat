@@ -33,26 +33,26 @@ function MessagesList({ initialMessages, chatId }: any) {
     }
 
   return (
-    <div className='flex-grow flex flex-col gap-2 px-4'>
+    <div className='flex-grow flex flex-col gap-2 p-4 drop-shadow-4xl'>
         {messages.length != 0 && 
         messages.map( (m: any, index: number) => {
             const isCurrentUserSender = (m.sender == currentUserName)
             return  (<div className = {isCurrentUserSender ? 'ml-auto w-fit flex justify-end relative group gap-4' : 'mr-auto flex'} key={index} >
                             
-                        {isCurrentUserSender && buttonsVisibility[m.id] && 
+                        { isCurrentUserSender && buttonsVisibility[m.id] && 
                         <DeleteMessage mId={m.id} chatId={chatId} />}
 
-                        {isCurrentUserSender && !buttonsVisibility[m.id] &&
+                        { isCurrentUserSender && !buttonsVisibility[m.id] &&
                         <div className='h-full w-7'></div>
                         }
 
-                        <div className={`rounded-xl h-7 ${isCurrentUserSender ? 'bg-base-color' : 'bg-primary-color'}`}>
+                        <div className={`px-2 rounded-xl h-7 ${isCurrentUserSender ? 'bg-base-color-1' : 'bg-primary-color'}`}>
                             <p>{m.text}</p>
                         </div>                        
 
-                        {isCurrentUserSender &&
+                        { isCurrentUserSender &&
                         <button className='hidden group-hover:block absolute right-0 h-full' onClick={() => handleToggleMesMenu(m.id)}>
-                            <FaCaretLeft className='rounded-xl bg-action-color text-2xl z-10' />   
+                            <FaCaretLeft className='rounded-xl bg-gradient-to-r from-action-color-1 to-action-color-2 text-2xl z-10' />   
                         </button>                                                             
                         }
 

@@ -22,12 +22,12 @@ function Circles() {
   }, [])
   
   return (
-    <div className='flex p-1'>
+    <div className='flex p-1 drop-shadow-2xl'>
 
       <div className='h-[11vh] w-[20vw] mr-[1vw]'>
-        <LogOutUser className={'bg-action-color text-my-text-color w-full h-[49%] rounded-2xl mb-[2%]'} />
+        <LogOutUser className={'bg-gradient-to-r from-action-color-1 to-action-color-2 text-my-text-color w-full h-[49%] rounded-2xl mb-[2%]'} />
         <Link href='/'>
-          <div className='leading-4 bg-action-color text-my-text-color w-full h-[49%] rounded-2xl flex flex-col items-center justify-center'>
+          <div className='leading-4 bg-gradient-to-r from-action-color-1 to-action-color-2 text-my-text-color w-full h-[49%] rounded-2xl flex flex-col items-center justify-center'>
             <span>Add a</span>
             <span>Friend</span>
           </div>
@@ -37,8 +37,8 @@ function Circles() {
       <div className='h-[11vh] w-[79vw] border-2 rounded-2xl flex items-center'>
         {circles.length != 0 && 
           circles.map( (circle: any, index: number) => {
-          return  <Link href={`/${circle.id}`} key={index} className='px-1 h-full'>
-                    <div className='h-full aspect-square rounded-full bg-action-color text-my-text-color flex items-center justify-center'>{circle.name}</div>
+          return  <Link href={`/${circle.id}`} key={index} className='px-1 h-full '>
+                    <div className='h-full aspect-square rounded-full bg-gradient-to-r from-action-color-1 to-action-color-2 text-my-text-color flex items-center justify-center'>{circle.name}</div>
                   </Link>
         })}
       </div>
