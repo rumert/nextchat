@@ -44,13 +44,13 @@ export default function Main() {
         <form onSubmit={handleAddFriend} className="flex-grow flex flex-col items-center justify-center gap-2 drop-shadow-4xl">
           <input 
             type="text" 
-            className='w-32 border-2 bg-gradient-to-r from-base-color-1 to-base-color-2'
+            className='w-32'
             value={addFriend}
             onChange={e => setAddFriend(e.target.value)}
-          />
-          {resText && <p>{resText}</p>} 
-          <button type='submit' className="border-2 px-1 bg-gradient-to-r from-action-color-1 to-action-color-2">Add a new friend</button>
-        </form> 
+          /> 
+          <button type='submit' className="px-1 rounded-xl ">Add a new friend</button>
+          {resText ? <p>{resText}</p> : <div className="h-7"></div>}                            
+        </form>        
       </div>           
     </div>
   )

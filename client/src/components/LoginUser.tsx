@@ -26,7 +26,7 @@ function LoginUser() {
         }
     }
   return (
-    <form onSubmit={handleLogin} className='h-[90%] text-black text-lg '>
+    <form onSubmit={handleLogin} className='h-[90%] text-black text-lg'>
      
       <input 
         type="email" 
@@ -49,10 +49,15 @@ function LoginUser() {
         required
       />
 
-      <button type='submit' className='w-full h-10 bg-gradient-to-r from-action-color to-[#FCC3C3] border-2 border-primary-color text-my-text-color rounded-2xl mb-2'>LOGIN</button>
+      <button 
+        type='submit' 
+        className='w-full h-10 rounded-2xl mb-2 text-my-text-color'
+      >
+        LOGIN
+      </button>
       { formData.error && <p className='text-primary-color'>{formData.error}</p> }
       <p className='inline text-my-text-color pl-2'>Don't have an Account? </p>
-      <Link href='/register' className='text-action-color underline mb-2'>Sign up!</Link>
+      <Link href='/register' className='text-action-color-1 underline mb-2'>Sign up!</Link>
 
     </form>
   )

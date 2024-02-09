@@ -3,8 +3,8 @@
 @tailwind utilities;
 
   *{
-    --action-color-1: #C86AB4;
-    --action-color-2: #B3429A;    
+    --action-color-1: #1B998B;
+    --action-color-2: #15796E;    
     --primary-color: #4F298B;
     --base-color-1: #8156C8;
     --base-color-2: #6337A9;
@@ -29,16 +29,17 @@
 
   input {
     border-radius: 8px;
-    @apply border-2 border-base-color-2 bg-gradient-to-r from-base-color-1 to-base-color-2 drop-shadow-4xl;
+    @apply bg-opacity-70 bg-gray-1 border-2 border-base-color-2 shadow-2xl shadow-black text-my-text-color;
   }
 
-  button {
-    @apply bg-gradient-to-r from-action-color-1 to-action-color-2 border-2 border-action-color-2 drop-shadow-4xl;
+  button[type='submit'] {
+    @apply bg-gradient-to-r from-action-color-1 to-action-color-2 border-2 border-action-color-2 shadow-2xl;
   }
 
   input:focus {
     outline: 2px solid var(--action-color-1);
     outline-offset: 1px;
+    border: none;
   }
 
   .site {

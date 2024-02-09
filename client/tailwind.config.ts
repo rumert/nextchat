@@ -14,8 +14,8 @@ const config: Config = {
         'chat_background': "url('/chat-background.svg')",
       },   
       colors: {
-        "action-color-1": "#C86AB4",
-        "action-color-2": "#B3429A",
+        "action-color-1": "#1B998B",
+        "action-color-2": "#15796E",
         "primary-color": "#4F298B",
         "base-color-1": "#8156C8",
         "base-color-2": "#6337A9",        

@@ -104,10 +104,19 @@ function CreateUser() {
         required
       />
 
-      <button type='submit' className='w-full h-10 rounded-2xl mb-2'>CREATE</button>
-      <p className={formData.result === 'User created. Verification email sent!' ? 'text-action-color' : 'text-primary-color'}> {formData.result} </p>
-      <p className='inline text-my-text-color pl-4'>Or already </p>
-      <Link href='/login' className='text-action-color underline mb-2'>have an account?</Link>
+      <button 
+        type='submit' 
+        className='w-full h-10 rounded-2xl mb-2 text-my-text-color'
+      >
+        CREATE
+      </button>
+      <p className={formData.result === 'User created. Verification email sent!' ? 'text-action-color' : 'text-primary-color'}>
+        {formData.result} 
+      </p>
+      <p className='inline text-my-text-color pl-4'>Or already </p> 
+      <Link href='/login' className='text-action-color-1 underline mb-2'>
+        have an account?
+      </Link>
     </form>
   )
 }
