@@ -18,7 +18,7 @@ function DeleteMessage(id: any) {
   return (
     <button
       onClick={() => handleDelete(id)} 
-      className='flex items-center justify-center text-xl h-full aspect-square rounded-full bg-gradient-to-r from-action-color-1 to-action-color-2'
+      className='flex items-center justify-center text-xl h-7 aspect-square rounded-full bg-gradient-to-r from-action-color-1 to-action-color-2'
     >
       <MdDelete />
     </button>
