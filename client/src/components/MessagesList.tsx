@@ -4,6 +4,8 @@ import { getMessagesSnapshot } from '../../lib/firebase/firestore';
 import DeleteMessage from './DeleteMessage';
 import { useAuthContext } from '@/context/AuthContext';
 import { FaCaretLeft } from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa6";
+import { RiCheckDoubleFill } from "react-icons/ri";
 
 
 function MessagesList({ initialMessages, chatId }: any) {
@@ -21,7 +23,7 @@ function MessagesList({ initialMessages, chatId }: any) {
             } else {
                 console.log("no data")
             }
-        }, chatId)        
+        }, chatId, user.displayName)        
 
         return () => unsub
     }, [])
@@ -38,6 +40,7 @@ function MessagesList({ initialMessages, chatId }: any) {
             [messageId]: true
         }))
     }
+    
 
   return (
     <div className='h-[80vh] flex flex-col gap-2 p-4 drop-shadow-4xl overflow-y-scroll'>
@@ -45,6 +48,10 @@ function MessagesList({ initialMessages, chatId }: any) {
         messages.map( (m: any, index: number) => {
             const isCurrentUserSender = (m.sender == currentUserName)
             const isExpanded = expandedMessages[m.id] || false;
+            const hourr = m.createdAt.toDate().getHours().toString()
+            const minutee = m.createdAt.toDate().getMinutes().toString()
+            const hour = hourr.length == 1 ? '0' + hourr : hourr
+            const minute = minutee.length == 1 ? '0' + minutee : minutee              
             return  (<div className = {isCurrentUserSender ? 'ml-auto w-fit flex justify-end relative group gap-4' : 'mr-auto flex'} key={index} >
                             
                         { isCurrentUserSender && buttonsVisibility[m.id] && 
@@ -55,11 +62,19 @@ function MessagesList({ initialMessages, chatId }: any) {
                         }
 
                         <div>
-                            <div className={`px-2 rounded-xl max-w-[40vw] ${isExpanded ? 'max-h-full' : 'max-h-28'} overflow-y-hidden break-words ${isCurrentUserSender ? 'bg-base-color-1' : 'bg-primary-color'}`}>
-                                <p>{m.text}</p>
+                            <div className={`py-1 px-2 rounded-xl max-w-[40vw] break-words ${isCurrentUserSender ? 'bg-base-color-1' : 'bg-primary-color'}`}>
+                                <p className={`${isExpanded ? 'max-h-full' : 'max-h-28'} overflow-y-hidden`}>{m.text}</p>
+                                <div className='flex gap-2 ml-auto w-fit'>
+                                    <p className='text-gray-2 text-base'>{`${hour} : ${minute}`}</p>
+                                    {m.status == 'sent' && isCurrentUserSender && <FaCheck className='text-gray-1 text-base' />}
+                                    {m.status == 'delivered' && isCurrentUserSender && <RiCheckDoubleFill className='text-action-color-1' />}
+                                </div>    
                             </div>
+                            
                             {(m.text.length > 40) && !isExpanded && 
-                                <button onClick={() => handleExceededMessages(m.id)} className='bg-action-color-2 rounded-lg px-2'>Read More</button>
+                                <button onClick={() => handleExceededMessages(m.id)} className='bg-action-color-2 rounded-lg px-2'>
+                                    Read More
+                                </button>
                             }
                         </div>                                          
 

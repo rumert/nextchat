@@ -25,23 +25,35 @@ export async function getMessages({ currentUserName, chatId }: any) {
     const snap: any = await getDocs(q)
     
     let messages: any = []
-    snap.forEach((doc: any) => {
+    snap.forEach(async (doc: any) => {
+        if (doc.data().sender != currentUserName) {
+            await updateDoc(doc.ref, { status: 'delivered' })
+        }       
         const data = doc.data()
         messages.push(data);
     })
     return messages
 }
 
-export async function getMessagesSnapshot(callback: Function, chatId: any) {
+export async function getMessagesSnapshot(callback: Function, chatId: any, currentUserName: any) {
 
     const colRef: any = collection(chatsRef, chatId, "messages")
     const q = query( colRef, orderBy('createdAt') )
     const mesSnap = onSnapshot(q, (snap: any) => {
-        const results = snap.docs.map((doc: any) => {
-            const data = doc.data()
-            return data;
-        })
-        callback(results)
+        const isThereSentStatus = snap.docs.some((doc: any) => 
+          ( doc.data().sender != currentUserName ) && ( doc.data().status == 'sent' )
+        )
+        if (isThereSentStatus) {
+            snap.docs.map(async (doc: any) => {
+                await updateDoc(doc.ref, { status: 'delivered' }) 
+            }) 
+        } else {
+            const results = snap.docs.map((doc: any) => {
+                const data = doc.data()
+                return data;
+            })
+            callback(results)
+        }    
     })
 
     return mesSnap

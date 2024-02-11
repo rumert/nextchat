@@ -9,7 +9,8 @@ export async function POST(req: Request) {
             sender: currentUserName,
             text: text,
             createdAt: serverTimestamp(),
-            id: ''
+            id: '',
+            status: 'sent'
         })
         const generatedId = docRef.id
         await updateDoc(docRef, { id: generatedId })
