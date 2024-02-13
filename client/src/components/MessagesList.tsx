@@ -6,6 +6,7 @@ import { useAuthContext } from '@/context/AuthContext';
 import { FaCaretLeft } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
 import { RiCheckDoubleFill } from "react-icons/ri";
+import Loading from './loading';
 
 
 function MessagesList({ initialMessages, chatId }: any) {
@@ -15,18 +16,27 @@ function MessagesList({ initialMessages, chatId }: any) {
     const [messages, setMessages] = useState(initialMessages)
     const [buttonsVisibility, setButtonsVisibility]: any = useState({})
     const [expandedMessages, setExpandedMessages]: any = useState({})
+    const messageRefs: any = useRef([]);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const unsub: any = getMessagesSnapshot( (mes: any) => {
-            if (mes) {
-                setMessages(mes);
-            } else {
-                console.log("no data")
-            }
+        const unsub: any = getMessagesSnapshot( (mes: any) => {   
+            setMessages(mes);
+            setLoading(false)    
         }, chatId, user.displayName)        
 
         return () => unsub
     }, [])
+
+    useEffect(() => {
+        messageRefs.current = messageRefs.current.slice(0, messages.length);
+    }, [messages]);
+
+    function isOverflowed(index: number) {
+        const ref = messageRefs.current[index]
+        if (!ref) { return false }
+        else { return ref.scrollHeight > ref.clientHeight }   
+    }
 
     function handleToggleMesMenu(messageId: any) {
         setButtonsVisibility((prevVisibility: any) => ({           
@@ -44,7 +54,9 @@ function MessagesList({ initialMessages, chatId }: any) {
 
   return (
     <div className='h-[80vh] flex flex-col gap-2 p-4 drop-shadow-4xl overflow-y-scroll'>
-        {messages.length != 0 && 
+
+        {loading && <Loading />}
+        {messages.length != 0 && !loading &&
         messages.map( (m: any, index: number) => {
             const isCurrentUserSender = (m.sender == currentUserName)
             const isExpanded = expandedMessages[m.id] || false;
@@ -61,21 +73,21 @@ function MessagesList({ initialMessages, chatId }: any) {
                         <div className='h-full w-7'></div>
                         }
 
-                        <div>
+                        <div >
                             <div className={`py-1 px-2 rounded-xl max-w-[40vw] break-words ${isCurrentUserSender ? 'bg-base-color-1' : 'bg-primary-color'}`}>
-                                <p className={`${isExpanded ? 'max-h-full' : 'max-h-28'} overflow-y-hidden`}>{m.text}</p>
+                                <p ref={(ref) => (messageRefs.current[index] = ref)} className={`${isExpanded ? 'max-h-full' : 'max-h-28'} overflow-y-hidden`}>{m.text}</p>
                                 <div className='flex gap-2 ml-auto w-fit'>
                                     <p className='text-gray-2 text-base'>{`${hour} : ${minute}`}</p>
-                                    {m.status == 'sent' && isCurrentUserSender && <FaCheck className='text-gray-1 text-base' />}
-                                    {m.status == 'delivered' && isCurrentUserSender && <RiCheckDoubleFill className='text-action-color-1' />}
+                                    {m.status == 'sent' && isCurrentUserSender && <FaCheck className='text-gray-1 text-base my-auto' />}
+                                    {m.status == 'delivered' && isCurrentUserSender && <RiCheckDoubleFill className='text-action-color-1 my-auto' />}
                                 </div>    
                             </div>
                             
-                            {(m.text.length > 40) && !isExpanded && 
+                            { !isExpanded && isOverflowed(index) && (
                                 <button onClick={() => handleExceededMessages(m.id)} className='bg-action-color-2 rounded-lg px-2'>
                                     Read More
                                 </button>
-                            }
+                            )}
                         </div>                                          
 
                         { isCurrentUserSender &&

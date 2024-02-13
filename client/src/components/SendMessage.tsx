@@ -24,7 +24,7 @@ function SendMessage({ chatId }: any) {
     
   }
   return (
-    <form onSubmit={handleSubmit} className='h-[10%] flex'>
+    <form onSubmit={handleSubmit} className='h-[10vh] flex'>
       <input 
           type="text" 
           className='h-full w-[80%]'

@@ -3,9 +3,9 @@ import MessagesList from "@/components/MessagesList"
 import { getMessages } from "../../../lib/firebase/firestore";
 import SendMessage from "@/components/SendMessage";
 import { useEffect, useState } from "react";
-import Circles from "@/components/Circles";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
+import AuthedNavbar from "@/components/AuthedNavbar";
 
 export default function page({ params }: any) {
   
@@ -36,11 +36,11 @@ export default function page({ params }: any) {
   }, []);
   return (
 
-    <div className='flex-grow flex flex-col h-screen'>
+    <div className='flex flex-col'>   
 
-        <Circles />
+        <AuthedNavbar />           
         { haveAccess &&
-        <div className='flex-grow flex flex-col'>
+        <div>
           <MessagesList initialMessages={messages} chatId={chatId} />
           <SendMessage chatId={chatId} />
         </div>
