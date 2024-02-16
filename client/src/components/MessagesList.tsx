@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { getMessagesSnapshot } from '../../lib/firebase/firestore';
 import DeleteMessage from './DeleteMessage';
 import { useAuthContext } from '@/context/AuthContext';
@@ -21,8 +21,8 @@ function MessagesList({ initialMessages, chatId }: any) {
 
     useEffect(() => {
         const unsub: any = getMessagesSnapshot( (mes: any) => {   
-            setMessages(mes);
-            setLoading(false)    
+            setMessages(mes);    
+            setLoading(false)
         }, chatId, user.displayName)        
 
         return () => unsub

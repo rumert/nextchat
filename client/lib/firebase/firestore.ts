@@ -55,7 +55,7 @@ export async function getMessagesSnapshot(callback: Function, chatId: any, curre
             callback(results)
         }    
     })
-
+    
     return mesSnap
 }
 

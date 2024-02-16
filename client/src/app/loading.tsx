@@ -4,7 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 function Loading() {
   return (
-    <Skeleton count={5}/>
+    <Skeleton count={10}/>
   )
 }
 

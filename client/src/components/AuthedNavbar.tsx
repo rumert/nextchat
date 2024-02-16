@@ -1,6 +1,6 @@
 'use client'
 import { useAuthContext } from '@/context/AuthContext';
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getCircles } from '../../lib/firebase/firestore';
 import Link from 'next/link';
 import LogOutUser from './LogOutUser';
@@ -17,7 +17,6 @@ function AuthedNavbar() {
 
     async function gettingCircles() {
       const data = await getCircles(user.displayName)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
       setCircles(data)
       setLoading(false)   
     }       
