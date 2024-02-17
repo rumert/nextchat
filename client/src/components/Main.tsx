@@ -1,7 +1,7 @@
 'use client'
 import { Suspense, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import Circles from "./AuthedNavbar";
+import AuthedNavbar from "./AuthedNavbar";
 import { useRouter } from "next/navigation";
 import Loading from "./loading";
 
@@ -41,10 +41,8 @@ export default function Main() {
 
   return (
     <div className=''>
-      <div className="bg-[url('/chat-background.svg')] bg-no-repeat bg-cover flex flex-col h-screen">
-        <Suspense fallback={<Loading />}>
-          <Circles />
-        </Suspense>        
+      <div className="bg-[url('/chat-background.svg')] bg-no-repeat bg-cover flex flex-col h-screen">        
+        <AuthedNavbar />                
         <form onSubmit={handleAddFriend} className="flex-grow flex flex-col items-center justify-center gap-2 drop-shadow-4xl">
           <input 
             type="text" 

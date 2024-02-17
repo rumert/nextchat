@@ -4,6 +4,7 @@ import './globals.css'
 
 //components
 import { AuthContextProvider } from '@/context/AuthContext'
+import { SkeletonTheme } from 'react-loading-skeleton'
 
 const inter = Poor_Story({ subsets: ['latin'], weight: '400' })
 
@@ -20,7 +21,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         
         {/* Wrap the children with the AuthContextProvider to provide authentication context */}
         <AuthContextProvider>
-          {children}
+          <SkeletonTheme baseColor='#313131' highlightColor='#525252'>
+            {children}
+          </SkeletonTheme>          
         </AuthContextProvider>  
 
       </body>

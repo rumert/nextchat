@@ -21,8 +21,8 @@ function Phone() {
     }, []);
 
   return (
-    <div className='h-[85vh] p-4 rounded-xl bg-homepage_background_1 bg-no-repeat bg-cover'>
-        <div className='h-full rounded-xl p-6'>
+    <div className='h-[85vh] p-4 rounded-xl bg-homepage_background_1 bg-no-repeat'>
+        
             <div className="site">
                 <div className="phone" onClick={handlePhone}>
                     <div className="phone_mic"></div>
@@ -45,7 +45,7 @@ function Phone() {
                     <div className="phone_button"></div>
                 </div>
             </div>
-        </div>
+        
     </div>
     
   )
