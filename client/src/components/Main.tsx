@@ -1,9 +1,8 @@
 'use client'
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import AuthedNavbar from "./AuthedNavbar";
 import { useRouter } from "next/navigation";
-import Loading from "./loading";
 
 
 export default function Main() {

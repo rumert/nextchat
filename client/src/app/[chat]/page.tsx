@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 import AuthedNavbar from "@/components/AuthedNavbar";
+import SkeletonMessages from "@/components/SkeletonMessages";
 
 export default function page({ params }: any) {
   
@@ -16,6 +17,7 @@ export default function page({ params }: any) {
   const chatId = params.chat
   const [messages, setMessages] = useState([]);
   const [haveAccess, setHaveAccess] = useState(false)
+  const [isLoading, setIsLoading] = useState(true) 
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -26,6 +28,7 @@ export default function page({ params }: any) {
         } else {
           setHaveAccess(true)
           setMessages(data);
+          setIsLoading(false);
         }
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -34,16 +37,21 @@ export default function page({ params }: any) {
 
     fetchMessages();
   }, []);
+
   return (
 
-    <div className='flex flex-col'>   
+    <div className='flex flex-col bg-chat_background bg-no-repeat bg-cover'>   
 
         <AuthedNavbar />           
         { haveAccess &&
         <div>
-          <MessagesList initialMessages={messages} chatId={chatId} />
+          {isLoading && <div className="h-[80vh]"><SkeletonMessages amount="7" /></div>}
+          {!isLoading && <MessagesList initialMessages={messages} chatId={chatId} />}
           <SendMessage chatId={chatId} />
         </div>
+        }
+        { !haveAccess && 
+        <div className=" h-[90vh]"></div>
         }
         
     </div>

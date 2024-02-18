@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { getCircles } from '../../lib/firebase/firestore';
 import Link from 'next/link';
 import LogOutUser from './LogOutUser';
-import Loading from './loading';
-import Skeleton from 'react-loading-skeleton';
+import SkeletonCircle from './SkeletonCircles';
 
 
 function AuthedNavbar() {
@@ -18,11 +17,11 @@ function AuthedNavbar() {
 
     async function gettingCircles() {
       const data = await getCircles(user.displayName)
-      setCircles(data)
-      setIsLoading(false)   
+      setCircles(data) 
+      setIsLoading(false)       
     }       
     gettingCircles()
-    
+        
   }, [])
   
   return (
@@ -37,13 +36,10 @@ function AuthedNavbar() {
           </div>
         </Link>
       </div>
-      
+    
+    
       <div className='h-[calc(10vh-4px)] w-[79vw] border-2 rounded-2xl flex items-center'>
-        {isLoading && 
-          <div className='flex h-full aspect-square rounded-full'>
-            <Skeleton circle className='w-full h-full' />
-          </div>          
-        }
+        
         {circles.length != 0 && !isLoading &&
           circles.map( (circle: any, index: number) => {
           return  <Link href={`/${circle.id}`} key={index} className='px-1 h-full'>
@@ -52,7 +48,11 @@ function AuthedNavbar() {
                     </div>
                   </Link>  
         })}
+
+        { isLoading && <div className='flex gap-2 px-1 h-full'> <SkeletonCircle classes="h-full aspect-square " amount="1" /> </div>}
+
       </div>
+    
 
     </div>
   )

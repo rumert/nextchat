@@ -4,7 +4,6 @@ import './globals.css'
 
 //components
 import { AuthContextProvider } from '@/context/AuthContext'
-import { SkeletonTheme } from 'react-loading-skeleton'
 
 const inter = Poor_Story({ subsets: ['latin'], weight: '400' })
 
@@ -15,18 +14,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   
-  return (
-    <html lang="en">
-      <body className={`${inter.className} bg-gradient-to-l from-base-color-1 to-base-color-2 text-my-text-color text-lg`}>
-        
-        {/* Wrap the children with the AuthContextProvider to provide authentication context */}
-        <AuthContextProvider>
-          <SkeletonTheme baseColor='#313131' highlightColor='#525252'>
-            {children}
-          </SkeletonTheme>          
-        </AuthContextProvider>  
-
-      </body>
-    </html>
+  return (    
+      <html lang="en">      
+        <body className={`${inter.className} bg-gradient-to-l from-base-color-1 to-base-color-2 text-my-text-color text-lg`}>       
+ 
+          {/* Wrap the children with the AuthContextProvider to provide authentication context */}
+          <AuthContextProvider>                     
+              {children}                               
+          </AuthContextProvider>           
+ 
+        </body>      
+      </html>
+    
+    
   )
 }

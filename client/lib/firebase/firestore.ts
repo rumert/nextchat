@@ -53,9 +53,10 @@ export async function getMessagesSnapshot(callback: Function, chatId: any, curre
                 return data;
             })
             callback(results)
-        }    
+        } 
+        
     })
-    
+       
     return mesSnap
 }
 
@@ -69,10 +70,7 @@ export async function getCircles(username: any) {
             if (name != username) {result.push({name: name, id: doc.id})}
         }
     })
-    function timeout(delay: number) {
-        return new Promise( res => setTimeout(res, delay) );
-    }
-    await timeout(3000);
+
     return result 
 }
 
