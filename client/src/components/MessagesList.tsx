@@ -24,6 +24,15 @@ function MessagesList({ initialMessages, chatId }: any) {
             return ref?.scrollHeight !== ref?.clientHeight 
         })
         setIsOverflowed(arr)
+    }, [])
+
+    useEffect(() => {
+        const refs = messageRefs.current
+        const arr = refs.map((ref: any) => {
+            return ref?.scrollHeight !== ref?.clientHeight 
+        })
+        console.log('a')
+        setIsOverflowed(arr)
     }, [messages])
 
     useEffect(() => {
