@@ -8,23 +8,16 @@ function Navbar() {
   const { user }: any = useAuthContext()
 
   return (
-    <div className='px-[12%] text-lg pb-4'>
-      <div className='flex justify-between items-center h-12 pt-12 pb-8' >
-        <Link href='/' className='h-12 w-12 relative'>
-          <Image
-            src="/logo.svg"
-            alt="Logo"
-            fill={true}
-          />
-        </Link>
-        {!user ? 
-        <Link href="/register" className='bg-gradient-to-r from-action-color-2 to-action-color-1 text-base-color p-2 rounded-xl shadow-lg'>
-          <div>REGISTER</div>
-        </Link> :
-        <Link href = '/' className='bg-action-color text-base-color p-2 rounded-xl'>
-          <div>{user.displayName}</div>
-        </Link>
-        }
+    <div className="navbar bg-neutral text-neutral-content px-10 max-w-[1024px] mx-auto rounded-2xl m-2">
+      <div className="flex-1">
+        <Link href="/register" className="hover:text-primary">
+          NEXTCHAT
+        </Link> 
+      </div>
+      <div className="flex-none">
+        <Link href="/register" className="btn btn-primary">
+          {user ? user.displayName : 'REGISTER'}
+        </Link> 
       </div>
     </div>
   )
