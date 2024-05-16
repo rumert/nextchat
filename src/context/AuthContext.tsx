@@ -36,7 +36,7 @@ export function AuthContextProvider( { children }: AuthContextProviderProps ): J
     } );
 
     // Unsubscribe from the authentication state changes when the component is unmounted
-    //return () => unsubscribe();
+    return () => unsubscribe();
   }, [] );
 
   // Provide the authentication context to child components

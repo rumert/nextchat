@@ -1,15 +1,14 @@
 import React from 'react'
-import { signOut } from 'firebase/auth';
-import { auth } from '../../lib/firebase/firebase';
 import { useRouter } from 'next/navigation';
+import { auth } from '../../lib/firebase/firebase';
 
 function LogOutUser ({className}: any) {
 
     const router = useRouter()
 
     function handleLogOut() {
-        router.push('/')
-        signOut(auth)        
+      auth._signOut()    
+      router.push('/')    
       }
 
   return (

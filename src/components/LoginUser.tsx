@@ -16,8 +16,6 @@ function LoginUser() {
         e.preventDefault()
         const { result, error }: any = await signInEmPass(formData.email, formData.password)
         if ( error ) {
-          // Display and log any sign-in errors
-          console.log( error );
           setFormData( (prevData: any) => ({ ...prevData, error: error }) )
           return;
         }
