@@ -32,6 +32,11 @@ const config: Config = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('daisyui'),
+  ],
+  daisyui: {
+    themes: ["synthwave"],
+  },
 }
 export default config
