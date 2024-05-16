@@ -4,14 +4,12 @@ import { useAuthContext } from "@/context/AuthContext";
 import AuthedNavbar from "./AuthedNavbar";
 import { useRouter } from "next/navigation";
 
-
 export default function Main() {
   const route = useRouter()
   const { user }: any = useAuthContext();
   const currentUserName = user.displayName
   const [addFriend, setAddFriend] = useState('')
   const [resText, setResText]: any = useState(null)
-  
 
   async function handleAddFriend(e: any) {
     e.preventDefault()

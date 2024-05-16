@@ -16,16 +16,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   
   return (    
       <html lang="en">      
-        <body className={`${inter.className} text-lg`}>       
+        <body className={`${inter.className}`}>       
  
           {/* Wrap the children with the AuthContextProvider to provide authentication context */}
           <AuthContextProvider>                     
-              {children}                               
+            {children}                               
           </AuthContextProvider>           
  
         </body>      
       </html>
-    
-    
   )
 }

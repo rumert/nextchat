@@ -1,6 +1,5 @@
 'use client'
 import { useAuthContext } from '@/context/AuthContext';
-import Image from 'next/image'
 import Link from 'next/link';
 
 function Navbar() {

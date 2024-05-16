@@ -7,7 +7,7 @@ import { useAuthContext } from '@/context/AuthContext';
 import RedirectLogin from './RedirectLogin';
 import Navbar from './Navbar';
 
-function HomePage() {
+export default function HomePage() {
     const { user }: any = useAuthContext();
 
     return (
@@ -25,6 +25,3 @@ function HomePage() {
       </div>
     );
   }
-
-
-export default HomePage
