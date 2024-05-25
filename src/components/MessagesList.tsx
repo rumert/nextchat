@@ -1,16 +1,17 @@
+{/*
 'use client'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { getMessagesSnapshot } from '../../lib/firebase/firestore';
 import DeleteMessage from './DeleteMessage';
-import { useAuthContext } from '@/context/AuthContext';
 import { FaCaretLeft } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
 import { RiCheckDoubleFill } from "react-icons/ri";
+import { useUser } from '../../lib/getUser';
 
 
 function MessagesList({ initialMessages, chatId }: any) {
 
-    const { user }: any = useAuthContext();
+    const user = useUser()
     const currentUserName = user.displayName
     const [messages, setMessages] = useState(initialMessages)
     const [buttonsVisibility, setButtonsVisibility]: any = useState({})
@@ -36,7 +37,7 @@ function MessagesList({ initialMessages, chatId }: any) {
     }, [messages])
 
     useEffect(() => {
-        const unsub: any = getMessagesSnapshot( (mes: any) => {   
+        const unsub: any = getMessagesSnapshot((mes: any) => {   
             setMessages(mes);    
         }, chatId, user.displayName)        
 
@@ -106,3 +107,5 @@ function MessagesList({ initialMessages, chatId }: any) {
 }
 
 export default MessagesList
+
+*/}

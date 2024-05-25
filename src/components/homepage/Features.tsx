@@ -2,7 +2,7 @@ import React from 'react'
 import { FaCheck } from "react-icons/fa6";
 import { FaX } from "react-icons/fa6";
 
-function Features() {
+export default function Features() {
   return (
     <div className='h-screen py-[5%] px-[5%] rounded-xl bg-homepage_background_2 bg-no-repeat bg-cover'>
         <div className='h-full w-full rounded-xl grid grid-rows-3 py-4 gap-8 text-center'>
@@ -31,5 +31,3 @@ function Features() {
     </div>
   )
 }
-
-export default Features

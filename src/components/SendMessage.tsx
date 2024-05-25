@@ -1,10 +1,9 @@
-'use client'
-import { useAuthContext } from '@/context/AuthContext';
+import { useUser } from '../../lib/getUser'
 import React, { useState } from 'react'
 
 function SendMessage({ chatId }: any) {
 
-  const { user }: any = useAuthContext();
+  const user = useUser()
   const currentUserName = user.displayName
   const [inputVal, setInputVal] = useState('')
 

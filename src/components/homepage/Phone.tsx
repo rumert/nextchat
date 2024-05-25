@@ -3,7 +3,7 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
-function Phone() {
+export default function Phone() {
 
     const [showNotification, setShowNotification] = useState(false);
 
@@ -50,5 +50,3 @@ function Phone() {
     
   )
 }
-
-export default Phone
