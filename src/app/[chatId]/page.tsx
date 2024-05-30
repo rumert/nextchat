@@ -4,6 +4,7 @@ import { getAuthenticatedAppForUser } from '../../../lib/firebase/serverApp';
 import { getMessages } from '../../../lib/firebase/firestore';
 import SkeletonMessages from '@/components/SkeletonMessages';
 import ChatListing from '@/components/ChatListing';
+import SendMessage from '@/components/SendMessage';
 
 export default async function page({ params }: any) {
   const { currentUser } = await getAuthenticatedAppForUser();
@@ -30,6 +31,7 @@ export default async function page({ params }: any) {
         { messagesOfChat && currentUser && 
           <ChatListing chatId={params.chatId} initialUser={currentUser?.toJSON()} initialMessages={JSON.parse(JSON.stringify(messagesOfChat))} />
         }
+        { currentUser && <SendMessage chatId={params.chatId} currentUser={currentUser?.toJSON()} /> }
       </div>
     </div>
   )

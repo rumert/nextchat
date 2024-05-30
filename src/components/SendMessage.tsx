@@ -1,38 +1,36 @@
-import { useUser } from '../../lib/getUser'
-import React, { useState } from 'react'
+import React from 'react'
+import { SubmitButton } from './SubmitButton'
+import { sendMessage } from '../../lib/firebase/firestore'
 
-function SendMessage({ chatId }: any) {
+export default function SendMessage({ chatId, currentUser }: any) {
 
-  const user = useUser()
-  const currentUserName = user.displayName
-  const [inputVal, setInputVal] = useState('')
-
-  async function handleSubmit(e: any){
-    e.preventDefault()
-    const text = inputVal
-    setInputVal('')  
-    if (text.trim() != '') {
-      const res = await fetch('/api/addMessage', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json', 
-        },
-        body: JSON.stringify({ currentUserName, text, chatId })
-      })
+  async function handleSending(formData: FormData){
+    "use server"
+    const message = formData.get("message") as string
+    if (message.trim() != '') {
+      try {
+        await sendMessage(currentUser.displayName, message, chatId)
+      } catch (err: any) {
+        console.error( err );
+      }
     }
     
   }
   return (
-    <form onSubmit={handleSubmit} className='h-[10vh] flex'>
+    <form className='h-[10vh] flex'>
       <input 
-          type="text" 
-          className='h-full w-[80%]'
-          value={inputVal}
-          onChange={e => setInputVal(e.target.value)}
-      /> 
-      <button type='submit' className='flex-grow rounded-2xl'>SEND</button>
+        type="text" 
+        name='message'
+        className='h-full w-[80%]'
+        required
+      />
+      <SubmitButton
+        formAction={handleSending}
+        className='flex-grow rounded-2xl'
+        pendingText="Sending..."
+      >
+        SEND
+      </SubmitButton> 
     </form>
   )
 }
-
-export default SendMessage

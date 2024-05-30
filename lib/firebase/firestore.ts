@@ -146,3 +146,15 @@ export async function getUpdatedMessages(callback: Function, chatId: any, curren
        
     return mesSnap
 }
+
+export async function sendMessage(currentUserName: any, message: any, chatId: any) {
+    const docRef = await addDoc(collection(db, "chats", chatId, "messages"), {
+        sender: currentUserName,
+        message,
+        createdAt: serverTimestamp(),
+        id: '',
+        status: 'sent'
+    })
+    const generatedId = docRef.id
+    await updateDoc(docRef, { id: generatedId })
+}
