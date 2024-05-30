@@ -75,7 +75,7 @@ export default function ChatListing({initialMessages, chatId, initialUser}: any)
    
                        <div>
                            <div className={`py-1 px-2 rounded-xl max-w-[40vw] break-words ${isCurrentUserSender ? 'bg-base-color-1' : 'bg-primary-color'}`}>
-                               <p ref={(ref) => (messageRefs.current[index] = ref)} className={`${isExpanded ? 'max-h-full' : 'max-h-28'} overflow-y-hidden`}>{m.text}</p>
+                               <p ref={(ref) => (messageRefs.current[index] = ref)} className={`${isExpanded ? 'max-h-full' : 'max-h-28'} overflow-y-hidden`}>{m.message}</p>
                                <div className='flex gap-2 ml-auto w-fit'>
                                    <p className={`${isCurrentUserSender ? 'text-gray-1' : 'text-gray-2'} text-base`}>{`${hour} : ${minute}`}</p>
                                    {m.status == 'sent' && isCurrentUserSender && <FaCheck className='text-gray-1 text-base my-auto' />}
