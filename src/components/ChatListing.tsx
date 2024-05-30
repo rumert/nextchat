@@ -4,7 +4,7 @@ import { getUpdatedMessages } from '../../lib/firebase/firestore'
 import DeleteMessage from './DeleteMessage'
 import { FaCaretLeft, FaCheck } from 'react-icons/fa6'
 import { FaCheckDouble } from "react-icons/fa6";
-import { useUserSession } from './header/Header'
+import { useUserSession } from '../../lib/getUser'
 
 export default function ChatListing({initialMessages, chatId, initialUser}: any) {
 
