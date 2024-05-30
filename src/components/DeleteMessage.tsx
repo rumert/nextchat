@@ -1,28 +1,16 @@
-'use client'
 import React from 'react'
 import { MdDelete } from "react-icons/md";
+import { deleteMessage } from '../../lib/firebase/firestore';
 
+export default function DeleteMessage({ mId, chatId }: any) {
 
-export async function handleDelete({ mId, chatId }: any) {
-    const res = await fetch('/api/deleteMessage', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json', 
-      },
-      body: JSON.stringify({ mId, chatId })
-    })
-    
-}
+  async function handleDelete() {
+    await deleteMessage(mId, chatId)
+  }
 
-function DeleteMessage(id: any) {
   return (
-    <button
-      onClick={() => handleDelete(id)} 
-      className='flex items-center justify-center text-xl h-7 aspect-square rounded-full bg-gradient-to-r from-action-color-1 to-action-color-2'
-    >
+    <button onClick={handleDelete} className='flex items-center justify-center text-xl h-7 aspect-square rounded-full bg-gradient-to-r from-action-color-1 to-action-color-2'>
       <MdDelete />
     </button>
   )
 }
-
-export default DeleteMessage

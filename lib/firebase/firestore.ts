@@ -1,4 +1,19 @@
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore"
+import { 
+    addDoc, 
+    arrayUnion, 
+    collection, 
+    deleteDoc, 
+    doc, 
+    getDoc, 
+    getDocs, 
+    onSnapshot, 
+    orderBy, 
+    query, 
+    serverTimestamp, 
+    setDoc, 
+    updateDoc, 
+    where 
+} from "firebase/firestore"
 import { db } from "./clientApp"
 import { signInEmPass, signUpEmPass } from "./auth"
 import { updateProfile } from "firebase/auth"
@@ -157,4 +172,8 @@ export async function sendMessage(currentUserName: any, message: any, chatId: an
     })
     const generatedId = docRef.id
     await updateDoc(docRef, { id: generatedId })
+}
+
+export async function deleteMessage(mId: any, chatId: any) {
+    await deleteDoc(doc(db, "chats", chatId, "messages", mId))
 }
