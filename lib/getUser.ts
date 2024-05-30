@@ -1,20 +1,41 @@
-"use client";
+'use client'
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react'
+import { onAuthStateChanged } from '../../../lib/firebase/auth';
+import { getIdToken } from 'firebase/auth';
+import { removeCookie, setCookie } from '@/app/actions';
 
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { auth } from "./firebase/clientApp";
+export function useUserSession(initialUser: any) {
+    // The initialUser comes from the server via a server component
+    const [user, setUser] = useState(initialUser);
+    const router = useRouter();
 
-export function useUser() {
-  const [user, setUser]: any = useState();
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(async (authUser: any) => {
+            setUser(authUser);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-      setUser(authUser);
-    });
+            if (authUser) {
+                const token = await getIdToken(authUser, true);
+                setCookie('idToken', token );
+            } else {
+                removeCookie('idToken');
+            }
+        });
 
-    return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+        return () => unsubscribe();
+    }, []);
 
-  return user;
+    useEffect(() => {
+        onAuthStateChanged((authUser: any) => {
+            if (user === undefined) return
+
+            // refresh when user changed to ease testing
+            if (user?.email !== authUser?.email) {
+                router.refresh()
+            }
+        })
+        
+    }, [user])
+
+    return user;
 }
