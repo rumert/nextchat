@@ -1,9 +1,9 @@
 'use client'
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react'
-import { onAuthStateChanged } from '../../../lib/firebase/auth';
 import { getIdToken } from 'firebase/auth';
 import { removeCookie, setCookie } from '@/app/actions';
+import { onAuthStateChanged } from './firebase/auth';
 
 export function useUserSession(initialUser: any) {
     // The initialUser comes from the server via a server component
