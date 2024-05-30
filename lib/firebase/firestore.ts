@@ -151,12 +151,10 @@ export async function getUpdatedMessages(callback: Function, chatId: any, curren
             }) 
         } else {
             const results = snap.docs.map((doc: any) => {
-                const data = doc.data()
-                return data;
+                return doc.data();
             })
             callback(results)
         } 
-        
     })
        
     return mesSnap
