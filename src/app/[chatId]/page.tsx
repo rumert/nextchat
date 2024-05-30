@@ -3,6 +3,7 @@ import React from 'react'
 import { getAuthenticatedAppForUser } from '../../../lib/firebase/serverApp';
 import { getMessages } from '../../../lib/firebase/firestore';
 import SkeletonMessages from '@/components/SkeletonMessages';
+import ChatListing from '@/components/ChatListing';
 
 export default async function page({ params }: any) {
   const { currentUser } = await getAuthenticatedAppForUser();
@@ -26,11 +27,9 @@ export default async function page({ params }: any) {
     <div className='flex flex-col bg-chat_background bg-no-repeat bg-cover'>   
       <div>
         {!messagesOfChat && <div className="h-[80vh]"><SkeletonMessages amount="7" /></div>}
-        {messagesOfChat && messagesOfChat.map((message: any, index: any) => {
-          return(
-            <h1 key={index}>{message.text}</h1>
-          )
-        })}
+        { messagesOfChat && currentUser && 
+          <ChatListing chatId={params.chatId} initialUser={currentUser?.toJSON()} initialMessages={JSON.parse(JSON.stringify(messagesOfChat))} />
+        }
       </div>
     </div>
   )

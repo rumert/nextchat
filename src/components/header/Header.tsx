@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 import UserNavbar from './UserNavbar';
 import { removeCookie, setCookie } from '@/app/actions';
 
-function useUserSession(initialUser: any) {
+export function useUserSession(initialUser: any) {
     // The initialUser comes from the server via a server component
     const [user, setUser] = useState(initialUser);
     const router = useRouter();

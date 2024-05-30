@@ -1,5 +1,4 @@
-
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore"
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, orderBy, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore"
 import { db } from "./clientApp"
 import { signInEmPass, signUpEmPass } from "./auth"
 import { updateProfile } from "firebase/auth"
@@ -123,9 +122,7 @@ export async function getMessages( currentUserName: any, chatId: any ) {
     }
 }
 
-{/*
-
-export async function getMessagesSnapshot(callback: Function, chatId: any, currentUserName: any) {
+export async function getUpdatedMessages(callback: Function, chatId: any, currentUserName: any) {
 
     const colRef: any = collection(collection(db, "chats"), chatId, "messages")
     const q = query( colRef, orderBy('createdAt') )
@@ -149,5 +146,3 @@ export async function getMessagesSnapshot(callback: Function, chatId: any, curre
        
     return mesSnap
 }
-
-*/}
