@@ -20,16 +20,19 @@ export default async function page({ searchParams }: any) {
       password, 
       repPassword 
     } = Object.fromEntries(formData.entries()) as Record<string, string>;
+    let redirectPath: string;
 
     if (password != repPassword) {
-      return redirect("/register/?message=Passwords do not match")
+      redirectPath = "/register/?message=Passwords do not match"
     } else {
       try {
         await createUser(email, password, nickname)
-        return redirect("/register/?message=User created, verification email sent!")
+        redirectPath = "/register?message=User created, verification email sent!"
       } catch (err: any) {
         console.error( err );
-        return redirect(`/register/?message=${err.message}`)
+        redirectPath = `/register/?message=${err.message}`
+      } finally {
+        return redirect(redirectPath!)
       }
     }
   }
