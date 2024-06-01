@@ -1,15 +1,15 @@
 'use client'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { getUpdatedMessages } from '../../lib/firebase/firestore'
-import DeleteMessage from './DeleteMessage'
+import { getUpdatedMessages } from '../../../lib/firebase/firestore'
 import { FaCaretLeft, FaCheck } from 'react-icons/fa6'
 import { FaCheckDouble } from "react-icons/fa6";
-import { useUserSession } from '../../lib/getUser'
+import DeleteMessage from './DeleteMessage';
+import { useUserSession } from '../../../lib/getUser';
 
 export default function ChatListing({initialMessages, chatId, initialUser}: any) {
 
     const user = useUserSession(initialUser)
-    const currentUserName = user.displayName
+    const currentUserName = user?.displayName
     const [messages, setMessages] = useState(initialMessages)
     const [buttonsVisibility, setButtonsVisibility]: any = useState({})
     const [expandedMessages, setExpandedMessages]: any = useState({})

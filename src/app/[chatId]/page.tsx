@@ -2,9 +2,9 @@ import { redirect } from 'next/navigation';
 import React from 'react'
 import { getAuthenticatedAppForUser } from '../../../lib/firebase/serverApp';
 import { getMessages } from '../../../lib/firebase/firestore';
-import SkeletonMessages from '@/components/SkeletonMessages';
-import ChatListing from '@/components/ChatListing';
-import SendMessage from '@/components/SendMessage';
+import SkeletonMessages from '@/components/chatPage/SkeletonMessages';
+import ChatListing from '@/components/chatPage/ChatListing';
+import SendMessage from '@/components/chatPage/SendMessage';
 
 export default async function page({ params }: any) {
   const { currentUser } = await getAuthenticatedAppForUser();

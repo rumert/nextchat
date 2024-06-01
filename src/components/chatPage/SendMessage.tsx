@@ -1,6 +1,6 @@
 import React from 'react'
-import { SubmitButton } from './SubmitButton'
-import { sendMessage } from '../../lib/firebase/firestore'
+import { SubmitButton } from '../SubmitButton';
+import { sendMessage } from '../../../lib/firebase/firestore';
 
 export default function SendMessage({ chatId, currentUser }: any) {
 
