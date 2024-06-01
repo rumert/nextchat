@@ -11,15 +11,15 @@ export default async function UserHomepage({ initialUser, message }: any) {
     const friendName = formData.get("friendName") as string;
     if (friendName.trim() != '' && currentUserName != friendName) {
       let chatDocId = null;
+      let redirectPath: string;
       try {
         chatDocId = await addFriend(initialUser.uid, friendName)
+        redirectPath = `/${chatDocId}`
       } catch (err: any) {
         console.error( err );
-        return redirect(`/?message=${err.message}`)
+        redirectPath = `/?message=${err.message}`
       } finally {
-        if (chatDocId) {
-          return redirect(`/${chatDocId}`);
-        }
+        return redirect(redirectPath!);
       }
     }
   }
