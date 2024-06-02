@@ -1,15 +1,17 @@
 import React from 'react'
-import RedirectLogin from "@/components/homepage/RedirectLogin"
-import Phone from '@/components/homepage/Phone'
 import Features from '@/components/homepage/Features'
+import Hero from '@/components/homepage/Hero'
+import Reviews from '@/components/homepage/Reviews'
 
 export default function Homepage() {
   return (
-    <>
-        <Phone />
+    <div className='flex flex-col justify-center items-center gap-12'>
+        <Hero />
+        <div className="divider w-full max-w-[1024px] mx-auto"></div> 
         <Features />
-        <RedirectLogin />
-    </>
+        <div className="divider w-full max-w-[1024px] mx-auto"></div> 
+        <Reviews />
+    </div>
     
   )
 }

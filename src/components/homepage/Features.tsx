@@ -1,33 +1,27 @@
 import React from 'react'
-import { FaCheck } from "react-icons/fa6";
-import { FaX } from "react-icons/fa6";
 
 export default function Features() {
+  const features = [
+    { title: "We Care Your Privacy!", description: "Your password isn't saved to our database.", icon: "🔐" },
+    { title: "Every Type of Messages!", description: "Voice ✔️ Images and Videos ✔️ Documents ✔️ Spaghetti ❌", icon: "📨" },
+    { title: "Delete Your Message Anytime!", description: "There is no time limit for deleting a message.", icon: "🗑️" },
+    { title: "Find Your Best Friend!", description: "Add friends around the world easily.", icon: "🙋" },
+  ];
+
   return (
-    <div className='h-screen py-[5%] px-[5%] rounded-xl bg-homepage_background_2 bg-no-repeat bg-cover'>
-        <div className='h-full w-full rounded-xl grid grid-rows-3 py-4 gap-8 text-center'>
-          <div className='shadow-lg shadow-gray-1 bg-gradient-to-r from-gray-1 to-gray-2 rounded-3xl row-span-1 pt-[5%]'>
-            <h1 className='text-2xl pb-4'>We Care Your Privacy</h1>
-            <p className='text-lg'><span className='block'>Your password isn't saved</span>to our database.</p>
+    <div>
+      <h2 className="text-5xl mb-12 text-center">Features</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px] mx-auto">
+        {features.map((feature, index) => (
+          <div key={index} className="p-6 bg-secondary rounded-xl">
+            <div className="flex items-center mb-4">
+              <div className="text-3xl">{feature.icon}</div>
+              <h3 className="text-2xl font-semibold ml-4">{feature.title}</h3>
+            </div>
+            <p className='text-base'>{feature.description}</p>
           </div>
-          <div className='shadow-lg shadow-gray-1 bg-gradient-to-r from-gray-1 to-gray-2 rounded-3xl row-span-1 pt-[3%]'>
-            <h1 className='text-2xl pb-2'>Every Type of Messages</h1>
-            <p className='text-lg max-w-fit m-auto'>
-              <span className='block max-w-fit'>Sending Voice Message <FaCheck className="inline text-base-color ml-2" /></span>
-              <span className='block max-w-fit'>Images and Videos <FaCheck className="inline text-base-color ml-2" /></span>
-              <span className='block max-w-fit'>Documents <FaCheck className="inline text-base-color ml-2" /></span>
-              <span className='block max-w-fit'>Spaghetti <FaX className="inline text-base-color ml-2 text-base" /></span>
-            </p>        
-          </div>
-          <div className='shadow-lg shadow-gray-1 bg-gradient-to-r from-gray-1 to-gray-2 rounded-3xl row-span-1 pt-[5%]'>
-            <h1 className='text-2xl pb-4'>Find Your Best Friend</h1>
-            <p className='text-lg'>
-              <span className='block'>Are you looking for</span>
-              <span className='block'>somebody to chat with?</span>
-              <span className='block'>Get friends around the world easily.</span>
-            </p>         
-          </div>
-        </div>
+        ))}
+      </div>
     </div>
   )
 }

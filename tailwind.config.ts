@@ -19,7 +19,7 @@ const config = {
     },
     extend: {
       backgroundImage: {
-        'homepage_background_1': "url('/Homepage-background-1.svg')"
+        'hero-background': "url('/Hero-background.svg')"
       }, 
       colors: {
         border: "hsl(var(--border))",
