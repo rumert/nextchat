@@ -24,12 +24,12 @@ export default function Hero() {
     }, []);
 
   return (
-    <div className='h-screen md:h-[85vh] w-full max-w-[1024px] p-4 rounded-xl bg-hero-background bg-no-repeat md:flex md:justify-center'>
+    <div className='h-screen md:h-[85vh] w-full max-w-[1440px] p-4 rounded-xl bg-hero-background bg-no-repeat md:flex md:justify-center'>
 
         <Card className="h-fit w-full sm:w-4/5 md:w-1/2 m-auto md:mx-0 bg-transparent border-none">
           <CardHeader>
-            <CardTitle className='text-5xl font-medium'>Nextchat</CardTitle>
-            <CardDescription className='text-xl md:text-2xl'>
+            <CardTitle className='text-5xl lg:text-6xl font-medium'>Nextchat</CardTitle>
+            <CardDescription className='text-xl md:text-2xl lg:text-3xl'>
               The ultimate chat app for seamless communication with friends, family, and colleagues.
             </CardDescription>
           </CardHeader>
