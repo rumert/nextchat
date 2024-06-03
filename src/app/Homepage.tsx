@@ -7,9 +7,9 @@ export default function Homepage() {
   return (
     <div className='flex flex-col justify-center items-center gap-12'>
         <Hero />
-        <div className="divider w-full max-w-[1024px] mx-auto"></div> 
+        <hr className="w-full max-w-[1024px]"></hr> 
         <Features />
-        <div className="divider w-full max-w-[1024px] mx-auto"></div> 
+        <hr className="w-full max-w-[1024px]"></hr> 
         <Reviews />
     </div>
     

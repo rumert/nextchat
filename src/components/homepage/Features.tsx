@@ -11,7 +11,7 @@ export default function Features() {
   return (
     <div>
       <h2 className="text-5xl mb-12 text-center">Features</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px] mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px]">
         {features.map((feature, index) => (
           <div key={index} className="p-6 bg-secondary rounded-xl">
             <div className="flex items-center mb-4">
