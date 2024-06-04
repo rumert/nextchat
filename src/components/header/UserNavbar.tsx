@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signOut } from '../../../lib/firebase/auth';
-import SkeletonAvatars from './SkeletonAvatars';
 import { getAvatars } from '../../../lib/firebase/firestore';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Skeleton } from '../ui/skeleton';
 
 export default function UserNavbar({ user }: any) {
 
@@ -30,37 +32,49 @@ export default function UserNavbar({ user }: any) {
   }
   
   return (
-    <div className='flex pt-1 px-1 drop-shadow-2xl'>
+    <div className='flex md:flex-col-reverse md:h-screen md:fixed md:left-0 items-center gap-2 p-1'>
 
-      <div className='h-[calc(10vh-4px)] w-[20vw] mr-[1vw]'>
-        <button onClick={handleLogOut} className='bg-gradient-to-r from-action-color-1 to-action-color-2 text-my-text-color w-full h-[48%] mb-[2%] rounded-2xl'>
-          Log Out 
-        </button>
-        <Link href='/'>
-          <div className='leading-4 bg-gradient-to-r from-action-color-1 to-action-color-2 text-my-text-color w-full h-[48%] rounded-2xl flex flex-col items-center justify-center'>
-            <span>Add a</span>
-            <span>Friend</span>
-          </div>
-        </Link>
-      </div>
-    
-    
-      <div className='h-[calc(10vh-4px)] w-[79vw] border-2 rounded-2xl flex items-center'>
+      <div className=' flex-1 border-2 rounded-xl flex md:flex-col items-center gap-2 py-1 px-2'>
+
+        {isLoading &&
+          [0,1,2].map( (index: number) => {
+          return  <Skeleton key={index} className="h-16 w-16 rounded-full" /> 
+        })}
         
         {avatars.length != 0 && !isLoading &&
           avatars.map( (avatar: any, index: number) => {
-          return  <Link href={`/${avatar.chatId}`} key={index} className='px-1 h-full'>
-                    <div className='h-full aspect-square rounded-full bg-gradient-to-r from-action-color-1 to-action-color-2 text-my-text-color flex items-center justify-center'>
-                      {avatar.name}
-                    </div>
+          return  <Link href={`/${avatar.chatId}`} key={index}>
+                    <Avatar className='w-16 h-16'>
+                      <AvatarImage src={`/avatar-${index + 1}.jpg`} />
+                      <AvatarFallback>{avatar.name.match(/\b(\w)/g).join('').toUpperCase()}</AvatarFallback>
+                    </Avatar>
                   </Link>  
         })}
 
-        { isLoading && <div className='flex gap-2 px-1 h-full'> <SkeletonAvatars classes="h-full aspect-square " amount="1" /> </div>}
-
       </div>
-    
 
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Avatar className='w-16 h-16'>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>{user.displayName.match(/\b(\w)/g).join('').toUpperCase()}</AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem asChild>
+            <Link href='/'>
+              Add a Friend
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <button onClick={handleLogOut} className='h-full w-full'>
+              Log Out
+            </button>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    
     </div>
   )
 }

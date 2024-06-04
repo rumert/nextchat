@@ -25,14 +25,12 @@ export default async function page({ params }: any) {
   }
 
   return (
-    <div className='flex flex-col bg-chat_background bg-no-repeat bg-cover'>   
-      <div>
-        {!messagesOfChat && <div className="h-[80vh]"><SkeletonMessages amount="7" /></div>}
-        { messagesOfChat && currentUser && 
-          <ChatListing chatId={params.chatId} initialUser={currentUser?.toJSON()} initialMessages={JSON.parse(JSON.stringify(messagesOfChat))} />
-        }
-        { currentUser && <SendMessage chatId={params.chatId} currentUser={currentUser?.toJSON()} /> }
-      </div>
+    <div className='flex flex-col h-[calc(100vh-84px)] md:h-screen md:w-[calc(100vw-92px)] md:ml-auto bg-chat_background bg-no-repeat bg-cover'>   
+      {!messagesOfChat && <div className="h-[80vh]"><SkeletonMessages amount="7" /></div>}
+      { messagesOfChat && currentUser && 
+        <ChatListing chatId={params.chatId} initialUser={currentUser?.toJSON()} initialMessages={JSON.parse(JSON.stringify(messagesOfChat))} />
+      }
+      { currentUser && <SendMessage chatId={params.chatId} currentUser={currentUser?.toJSON()} /> }
     </div>
   )
 }

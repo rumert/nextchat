@@ -49,7 +49,7 @@ export default function ChatListing({initialMessages, chatId, initialUser}: any)
     }
     
   return (
-    <div className='h-[80vh] flex flex-col gap-2 p-4 drop-shadow-4xl overflow-y-scroll'>
+    <div className='h-[90%] flex flex-col gap-2 p-4 drop-shadow-4xl overflow-y-scroll'>
        
        {messages?.length != 0 &&
            messages.map( (m: any, index: number) => {

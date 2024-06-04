@@ -17,7 +17,7 @@ export default function SendMessage({ chatId, currentUser }: any) {
     
   }
   return (
-    <form className='h-[10vh] flex'>
+    <form className='h-[10%] flex'>
       <input 
         type="text" 
         name='message'
