@@ -1,7 +1,7 @@
-
 import { SubmitButton } from "@/components/SubmitButton";
 import { redirect } from "next/navigation";
 import { addFriend } from "../../lib/firebase/firestore";
+import { Input } from "@/components/ui/input";
 
 export default async function UserHomepage({ initialUser, message }: any) {
   const currentUserName = initialUser.displayName
@@ -25,29 +25,29 @@ export default async function UserHomepage({ initialUser, message }: any) {
   }
 
   return (
-  <div className="h-[calc(100vh-84px)] md:h-screen md:w-[calc(100vw-92px)] md:ml-auto bg-[url('/chat-background.svg')] bg-no-repeat bg-cover flex flex-col">        
-                        
-    <form className="flex-grow flex flex-col items-center justify-center gap-2 drop-shadow-4xl">
-      <input 
+  <div className="h-[calc(100vh-84px)] md:h-screen md:w-[calc(100vw-92px)] md:ml-auto flex flex-col justify-center items-center">        
+
+    <form action={handleAddFriend} className="flex w-full max-w-sm items-center space-x-2 mb-4">
+      <Input 
         type="text" 
-        className='w-32'
         name="friendName"
-        placeholder="Type your friend's name"
+        placeholder="Username"
         required
-      /> 
+      />
       <SubmitButton
-        formAction={handleAddFriend}
-        className="px-1 rounded-xl"
-        pendingText="Adding..."
+        pendingText="Please Wait..."
+        className='text-base'
       >
-        Add a new friend
-      </SubmitButton>         
-      {message && (
-        <p>
-          {message}
-        </p>
-      )}                
-    </form>        
+        Add your friend
+      </SubmitButton>                  
+    </form>   
+
+    {message && (
+      <p>
+        {message}
+      </p>
+    )} 
+
   </div>   
   )
 }
