@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import { signInUser } from '../../../lib/firebase/firestore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 export default function LoginUser({ message }: any) {
 
@@ -22,37 +25,32 @@ export default function LoginUser({ message }: any) {
     };
 
   return (
-    <form onSubmit={handleLogin} className='h-[90%] text-black text-lg'>
+    <form onSubmit={handleLogin}>
 
-        <input 
+        <Label htmlFor="email" className='md:text-xl'>Email</Label>
+        <Input 
         type="email" 
+        id="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className='border-2 mb-4 pl-4 w-full h-10' 
-        placeholder='EMAIL'
+        className='text-lg mb-4 md:text-xl md:h-12 md:w-96'
         required
         />
 
-        <input 
+        <Label htmlFor="password" className='md:text-xl'>Password</Label>
+        <Input 
         type="password" 
+        id="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         minLength={6}
-        className='border-2 mb-4 pl-4 w-full h-10'
-        placeholder='PASSWORD'
+        className='text-lg mb-4 md:text-xl md:h-12 md:w-96'
         required
         />
 
-        <button type="submit" className='w-full h-10 rounded-2xl mb-2 text-my-text-color'>
-            LOGIN
-        </button>
-        {message && (
-          <p>
-            {message}
-          </p>
-        )}
-        <p className='inline text-my-text-color pl-2'>Don't have an Account? </p>
-        <Link href='/register' className='text-action-color-1 underline mb-2'>Sign up!</Link>
+        <Button type="submit" className='md:h-11 md:rounded-md md:text-xl'>
+          Sign in
+        </Button>
         
     </form>
   )

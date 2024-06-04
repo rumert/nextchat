@@ -2,6 +2,8 @@ import React from 'react'
 import { getAuthenticatedAppForUser } from '../../../lib/firebase/serverApp';
 import { redirect } from 'next/navigation';
 import LoginUser from './LoginUser';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 
 export default async function page({ searchParams }: any) {
   const { currentUser } = await getAuthenticatedAppForUser();
@@ -11,11 +13,24 @@ export default async function page({ searchParams }: any) {
   }
 
   return (
-    <div className='h-screen flex flex-col justify-center bg-chat_background'>
-      <div className='bg-opacity-30 bg-gray-1 border border-base-color-2 shadow-lg shadow-base-color-2 rounded-2xl mx-12 h-[80vh] py-16 px-6'>
-        <h1 className='text-center mb-4 text-2xl'>LOGIN</h1>
-        <LoginUser message={searchParams.message}/>
-      </div>
+    <div className='h-[calc(100vh-112px)] flex flex-col justify-center items-center'>
+      <Card>
+        <CardHeader>
+          <CardTitle className='md:text-3xl'>Sign in to your account</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <LoginUser message={searchParams.message}/>
+        </CardContent>
+        <CardFooter>
+          {searchParams.message && (
+            <p>
+              {searchParams.message}
+            </p>
+          )}
+          <p className='inline md:text-lg'>Don't have an Account? </p>
+          <Link href='/register' className='underline ml-1'>Sign up!</Link>
+        </CardFooter>
+      </Card>
     </div>
   )
 }
