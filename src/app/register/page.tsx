@@ -4,6 +4,10 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 import { createUser } from '../../../lib/firebase/firestore'
 import { getAuthenticatedAppForUser } from '../../../lib/firebase/serverApp'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 export default async function page({ searchParams }: any) {
 
   const { currentUser } = await getAuthenticatedAppForUser();
@@ -38,64 +42,75 @@ export default async function page({ searchParams }: any) {
   }
 
   return (
-    <div className='h-screen flex flex-col justify-center bg-chat_background'>
-      <div className='bg-opacity-30 bg-gray-1 border border-base-color-2 shadow-lg shadow-base-color-2 rounded-2xl mx-12 h-[80vh] py-16 px-6'>
-        <h1 className='text-center mb-4 text-2xl'>REGISTER</h1>
-        <form className='h-[90%] text-black text-lg '>
+    <div className='h-[calc(100vh-112px)] flex flex-col justify-center items-center'>
+      <Card>
+        <CardHeader>
+          <CardTitle className='md:text-3xl'>Create your account</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form action={handleRegister}>
 
-          <input 
+            <Label htmlFor="nickname" className='md:text-xl'>Nickname</Label>
+            <Input 
             type="text" 
-            name='nickname'  
-            className='border-2 mb-4 pl-4 w-full h-10' 
-            placeholder='NICKNAME'
+            id="nickname"
+            name='nickname'
+            className='text-lg mb-4 md:text-xl md:h-12 md:w-96'
             required
-          />
+            />
 
-          <input 
+            <Label htmlFor="email" className='md:text-xl'>Email</Label>
+            <Input 
             type="email" 
+            id="email"
             name='email'
-            className='border-2 block mb-4 pl-4 w-full h-10' 
-            placeholder='EMAIL'
+            className='text-lg mb-4 md:text-xl md:h-12 md:w-96'
             required
-          />
+            />
 
-          <input 
+            <Label htmlFor="password" className='md:text-xl'>Password</Label>
+            <Input 
             type="password" 
+            id="password"
             name='password'
+            className='text-lg mb-4 md:text-xl md:h-12 md:w-96'
             minLength={6}
-            className='border-2 block mb-4 pl-4 w-full h-10'
-            placeholder='PASSWORD'
             required
-          />
+            />
 
-          <input 
+            <Label htmlFor="repPassword" className='md:text-xl'>Repeat your password</Label>
+            <Input 
             type="password" 
+            id="repPassword"
             name='repPassword'
+            className='text-lg mb-4 md:text-xl md:h-12 md:w-96'
             minLength={6}
-            className='border-2 block mb-4 pl-4 w-full h-10'
-            placeholder='REPEAT YOUR PASSWORD'
             required
-          />
+            />
 
-          <SubmitButton
-            formAction={handleRegister}
-            className='w-full h-10 rounded-2xl mb-2 text-my-text-color'
-            pendingText="Please Wait..."
-          >
-            CREATE
-          </SubmitButton>         
-          {searchParams.message && (
-            <p>
-              {searchParams.message}
-            </p>
-          )}
-          <p className='inline text-my-text-color pl-4'>Or already </p> 
-          <Link href='/login' className='text-action-color-1 underline mb-2'>
-            have an account?
-          </Link>
-        </form>
-      </div>
+            <SubmitButton
+              pendingText="Creating..."
+              className='md:h-11 md:rounded-md md:text-xl'
+            >
+              Create
+            </SubmitButton> 
+
+          </form>
+        </CardContent>
+        <CardFooter>
+          <div className='flex flex-col gap-1'>
+            {searchParams.message && (
+              <p className='text-destructive'>
+                {searchParams.message}
+              </p>
+            )}
+            <div>
+              <p className='inline md:text-lg'>Or already </p>
+              <Link href='/login' className='underline'>have an acocunt?</Link>
+            </div>
+          </div>
+        </CardFooter>
+      </Card>
     </div>
-    
   )
 }
