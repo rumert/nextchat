@@ -22,13 +22,17 @@ export default async function page({ searchParams }: any) {
           <LoginUser message={searchParams.message}/>
         </CardContent>
         <CardFooter>
-          {searchParams.message && (
-            <p>
-              {searchParams.message}
-            </p>
-          )}
-          <p className='inline md:text-lg'>Don't have an Account? </p>
-          <Link href='/register' className='underline ml-1'>Sign up!</Link>
+          <div className='flex flex-col gap-1'>
+            {searchParams.message && (
+              <p className='text-destructive'>
+                {searchParams.message}
+              </p>
+            )}
+            <div>
+              <p className='inline md:text-lg'>Don't have an Account? </p>
+              <Link href='/register' className='underline'>Sign up!</Link>
+            </div>
+          </div>
         </CardFooter>
       </Card>
     </div>
