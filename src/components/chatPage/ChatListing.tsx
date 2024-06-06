@@ -1,26 +1,16 @@
 'use client'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { getUpdatedMessages } from '../../../lib/firebase/firestore'
-import { FaCaretLeft, FaCheck } from 'react-icons/fa6'
-import { FaCheckDouble } from "react-icons/fa6";
-import DeleteMessage from './DeleteMessage';
 import { useUserSession } from '../../../lib/getUser';
+import Message from './Message';
 
 export default function ChatListing({initialMessages, chatId, initialUser}: any) {
 
     const user = useUserSession(initialUser)
     const currentUserName = user?.displayName
     const [messages, setMessages] = useState(initialMessages)
-    const [buttonsVisibility, setButtonsVisibility]: any = useState({})
-    const [expandedMessages, setExpandedMessages]: any = useState({})
     const messageRefs: any = useRef([]);
     const [isOverflowed, setIsOverflowed]: any = useState([])
-
-    const checkOverflow = () => {
-        const refs = messageRefs.current;
-        const arr = refs.map((ref: any) => ref?.scrollHeight !== ref?.clientHeight);
-        setIsOverflowed(arr);
-    };
         
     useLayoutEffect(() => {
         checkOverflow();
@@ -32,34 +22,35 @@ export default function ChatListing({initialMessages, chatId, initialUser}: any)
     
     useEffect(() => {
         const unsub: any = getUpdatedMessages(setMessages, chatId, user.displayName)        
-    
         return () => unsub
     }, [])
-    
-    function handleToggleMesMenu(messageId: any) {
-        setButtonsVisibility((prevVisibility: any) => ({           
-            [messageId]: !prevVisibility[messageId]
-        }))
-    }
-    function handleExceededMessages(messageId: any) {
-        setExpandedMessages((prevExpanded: any) => ({
-            ...prevExpanded,
-            [messageId]: true
-        }))
-    }
+
+    function checkOverflow () {
+        const refs = messageRefs.current;
+        const arr = refs.map((ref: any) => ref?.scrollHeight !== ref?.clientHeight);
+        setIsOverflowed(arr);
+    };
     
   return (
-    <div className='h-[90%] flex flex-col gap-2 p-4 drop-shadow-4xl overflow-y-scroll'>
+    <div className="space-y-4">
+        {messages?.length > 0 && messages.map((m: any, index: any) => (
+            <Message
+                key={index}
+                message={m}
+                isCurrentUserSender={m.sender === currentUserName}
+                messageRef={(ref: any) => (messageRefs.current[index] = ref)}
+                isOverflowed={isOverflowed[index]}
+                chatId={chatId}
+            />
+        ))}
+    </div>
+  )
+}
+
+{/* <div className='h-[90%] flex flex-col gap-2 p-4 drop-shadow-4xl overflow-y-scroll'>
        
        {messages?.length != 0 &&
-           messages.map( (m: any, index: number) => {
-           const date = new Date(m.createdAt.seconds * 1000 + m.createdAt.nanoseconds/1000000)
-           const isCurrentUserSender = (m.sender == currentUserName)
-           const isExpanded = expandedMessages[m.id] || false;
-           const hourr = date.getHours().toString()
-           const minutee = date.getMinutes().toString()
-           const hour = hourr.length == 1 ? '0' + hourr : hourr
-           const minute = minutee.length == 1 ? '0' + minutee : minutee              
+           messages.map( (m: any, index: number) => {       
            return  (<div className = {isCurrentUserSender ? 'ml-auto w-fit flex justify-end relative group gap-4' : 'mr-auto flex'} key={index} >
                                
                        { isCurrentUserSender && buttonsVisibility[m.id] && 
@@ -70,7 +61,7 @@ export default function ChatListing({initialMessages, chatId, initialUser}: any)
                        }
    
                        <div>
-                           <div className={`py-1 px-2 rounded-xl max-w-[40vw] break-words ${isCurrentUserSender ? 'bg-base-color-1' : 'bg-primary-color'}`}>
+                           <div className={`py-1 px-2 rounded-lg max-w-[40vw] break-words ${isCurrentUserSender ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
                                <p ref={(ref) => (messageRefs.current[index] = ref)} className={`${isExpanded ? 'max-h-full' : 'max-h-28'} overflow-y-hidden`}>{m.message}</p>
                                <div className='flex gap-2 ml-auto w-fit'>
                                    <p className={`${isCurrentUserSender ? 'text-gray-1' : 'text-gray-2'} text-base`}>{`${hour} : ${minute}`}</p>
@@ -94,6 +85,4 @@ export default function ChatListing({initialMessages, chatId, initialUser}: any)
    
                     </div>)
        })}
-   </div>
-  )
-}
+   </div> */}
