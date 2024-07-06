@@ -1,20 +1,20 @@
 'use client'
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { signInUser } from '../../../lib/firebase/firestore';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 
-export default function LoginUser({ message }: any) {
+export default function LoginUser() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
   
-    async function handleLogin(e: any) {
-      e.preventDefault();
+    async function handleLogin(e: FormEvent<HTMLFormElement>) {
+      e.preventDefault()
+
       try {
         await signInUser(email, password);
         router.push('/');

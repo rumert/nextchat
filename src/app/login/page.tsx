@@ -5,7 +5,7 @@ import LoginUser from './LoginUser';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 
-export default async function page({ searchParams }: any) {
+export default async function page({ searchParams }: { searchParams: { message: string } }) {
   const { currentUser } = await getAuthenticatedAppForUser();
 
   if (currentUser) {
@@ -19,7 +19,7 @@ export default async function page({ searchParams }: any) {
           <CardTitle className='md:text-3xl'>Sign in to your account</CardTitle>
         </CardHeader>
         <CardContent>
-          <LoginUser message={searchParams.message}/>
+          <LoginUser />
         </CardContent>
         <CardFooter>
           <div className='flex flex-col gap-1'>

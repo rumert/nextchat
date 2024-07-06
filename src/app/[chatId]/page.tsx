@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation';
 import React from 'react'
 import { getAuthenticatedAppForUser } from '../../../lib/firebase/serverApp';
 import { getMessages } from '../../../lib/firebase/firestore';
-import SkeletonMessages from '@/components/chatPage/SkeletonMessages';
 import ChatListing from '@/components/chatPage/ChatListing';
 import SendMessage from '@/components/chatPage/SendMessage';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';

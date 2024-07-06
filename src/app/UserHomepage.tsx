@@ -2,8 +2,14 @@ import { SubmitButton } from "@/components/SubmitButton";
 import { redirect } from "next/navigation";
 import { addFriend } from "../../lib/firebase/firestore";
 import { Input } from "@/components/ui/input";
+import { User } from "firebase/auth";
 
-export default async function UserHomepage({ initialUser, message }: any) {
+interface Props {
+  initialUser: User
+  message: string
+}
+
+export default async function UserHomepage({ initialUser, message }: Props) {
   const currentUserName = initialUser.displayName
 
   async function handleAddFriend(formData: FormData) {
