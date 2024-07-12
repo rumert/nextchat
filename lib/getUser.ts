@@ -1,17 +1,17 @@
 'use client'
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react'
-import { getIdToken } from 'firebase/auth';
+import { getIdToken, User } from 'firebase/auth';
 import { removeCookie, setCookie } from '@/app/actions';
 import { onAuthStateChanged } from './firebase/auth';
 
-export function useUserSession(initialUser: any) {
+export function useUserSession(initialUser: User | {}) {
     // The initialUser comes from the server via a server component
-    const [user, setUser] = useState(initialUser);
+    const [user, setUser] = useState<User | null>(initialUser);
     const router = useRouter();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(async (authUser: any) => {
+        const unsubscribe = onAuthStateChanged(async (authUser) => {
             setUser(authUser);
 
             if (authUser) {
@@ -26,7 +26,7 @@ export function useUserSession(initialUser: any) {
     }, []);
 
     useEffect(() => {
-        onAuthStateChanged((authUser: any) => {
+        onAuthStateChanged((authUser) => {
             if (user === undefined) return
 
             // refresh when user changed to ease testing

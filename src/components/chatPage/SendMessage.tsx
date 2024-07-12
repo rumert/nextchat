@@ -1,47 +1,61 @@
+'use client'
 import React from 'react'
 import { SubmitButton } from '../SubmitButton';
-import { sendMessage } from '../../../lib/firebase/firestore';
 import { Input } from '../ui/input';
 import { Send } from 'lucide-react';
-import { FaRegPaperPlane } from "react-icons/fa6";
-import { redirect } from 'next/navigation';
+import { Button } from '../ui/button';
+import { FaFileImage, FaPaperclip } from 'react-icons/fa6';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { handleSending } from '@/app/actions';
 
-export default function SendMessage({ chatId, currentUser }: any) {
+interface Props {
+  chatId: string
+  username: string
+}
 
-  async function handleSending(formData: FormData){
-    "use server"
-    const message = formData.get("message") as string
-    let redirectPath;
-    if (message.trim() != '') {
-      try {
-        await sendMessage(currentUser.displayName, message, chatId)
-        redirectPath=`/${chatId}`
-      } catch (err: any) {
-        console.error( err );
-        redirectPath=`/${chatId}?message=${message}`
-      } finally {
-        return redirect(redirectPath!)
-      }
-    }
-    
-  }
+export default function SendMessage({ chatId, username }: Props) {
+
+  const handleSendingWithProps = handleSending.bind(null, chatId, username)
+
   return (
     
-    <form action={handleSending} className="flex w-full items-center space-x-2">
-      <Input
-        name='message'
-        type="text" 
-        placeholder="Type your message..."
-        className='flex-1'
-        required
-      />
-      <SubmitButton
-        className='rounded-lg text-xl'
-        pendingText="Sending..."
-      >
-        <Send className="h-4 w-4" />
-        <span className="sr-only">Send</span>
-      </SubmitButton> 
-    </form>
+    <div className="w-full flex items-center space-x-2">
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant='ghost'>
+            <FaPaperclip className='text-lg' />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <div className='flex items-center gap-1'>
+            <FaFileImage />
+            Upload Image
+          </div>
+          <div className='flex items-center gap-1'>
+            <FaFileImage />
+            Upload Image
+          </div>
+          <div className='flex items-center gap-1'>
+            <FaFileImage />
+            Upload Image
+          </div>
+        </PopoverContent>
+      </Popover>
+      <form action={handleSendingWithProps} className='flex w-full space-x-2'>
+        <Input
+          name='message'
+          type="text" 
+          placeholder="Type your message..."
+          className='flex-1'
+        />
+        <SubmitButton
+          className='rounded-lg text-xl'
+          pendingText="Sending..."
+        >
+          <Send className="h-4 w-4" />
+          <span className="sr-only">Send</span>
+        </SubmitButton> 
+      </form>
+    </div>
   )
 }

@@ -45,16 +45,16 @@
   }
 
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--base-color-2);
-    border-radius: 5px;
+    background: hsl(var(--secondary));
+    border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--base-color-1);
+    background: hsl(215 27.9% 25%);
   }
 
   .site {

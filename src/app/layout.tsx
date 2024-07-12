@@ -18,7 +18,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (    
   <html lang="en">      
     <body className={`${inter.className}`}>
-      <Header initialUser={currentUser?.toJSON()} />
+      <Header initialUser={currentUser?.toJSON()!} />
       {children}
     </body>      
   </html>   

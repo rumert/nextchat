@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaCheck } from 'react-icons/fa6'
 
-function SkeletonMessages({amount}: any) {
+function SkeletonMessages({amount}: {amount: string}) {
     const array = Array.from(Array(Number(amount)).keys())
   return (
     

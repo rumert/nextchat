@@ -18,12 +18,17 @@ import { db } from "./clientApp"
 import { signInEmPass, signUpEmPass } from "./auth"
 import { updateProfile } from "firebase/auth"
 
-export async function getAvatars(username: any) {
+export type AvatarType = {
+    chatId: string
+    name: string
+}
+
+export async function getAvatars(username: string) {
     try {
-        const result: any = []
+        const result: AvatarType[] = []
         const q = query( collection(db, "chats"), where("participants", "array-contains", username) )
-        const snap: any = await getDocs(q)
-        snap.forEach((doc: any) => {
+        const snap = await getDocs(q)
+        snap.forEach((doc) => {
             for(const name of doc.data().participants) {
                 if (name != username) {result.push({name: name, chatId: doc.id})}
             }
@@ -36,7 +41,7 @@ export async function getAvatars(username: any) {
     
 }
 
-export async function addFriend(currentUserId: any, friendName: any) {
+export async function addFriend(currentUserId: string, friendName: string) {
     
     try {
         // Check if the friend exists
@@ -82,13 +87,13 @@ export async function addFriend(currentUserId: any, friendName: any) {
     }
 }
 
-export async function createUser(email: any, password: any, nickname: any) {
+export async function createUser(email: string, password: string, nickname: string) {
     try {
         const userQuery = query( collection(db, 'users'), where('nickname', '==', nickname) )
         if ( !(await getDocs(userQuery)).empty ) {
           return 'Nickname already in use'
         }
-        const user: any = await signUpEmPass(email, password)
+        const user = await signUpEmPass(email, password)
         await updateProfile(user, {displayName: nickname})
         await setDoc(doc(db, "users", user.uid), {
             nickname,
@@ -105,14 +110,14 @@ export async function createUser(email: any, password: any, nickname: any) {
     }
 }
 
-export async function signInUser(email: any, password: any) {
-    const { user }: any = await signInEmPass(email, password)
+export async function signInUser(email: string, password: string) {
+    const { user } = await signInEmPass(email, password)
     await updateDoc(doc(db, 'users', user.uid), {
         lastLogin: user.metadata.lastSignInTime
     })
 }
 
-export async function getMessages( currentUserName: any, chatId: any ) {
+export async function getMessages( currentUserName: string, chatId: string ) {
     try {
         const docRef = doc(db, "chats", chatId)
         const chatDoc = await getDoc(docRef)
@@ -122,8 +127,8 @@ export async function getMessages( currentUserName: any, chatId: any ) {
         }
 
         const q = query( collection(docRef, "messages"), orderBy("createdAt") )
-        const snap: any = await getDocs(q)
-        let messages: any = []
+        const snap = await getDocs(q)
+        let messages = []
         for (const doc of snap.docs) {
             if (doc.data().sender != currentUserName) {
                 await updateDoc(doc.ref, { status: 'delivered' });
@@ -137,20 +142,20 @@ export async function getMessages( currentUserName: any, chatId: any ) {
     }
 }
 
-export async function getUpdatedMessages(callback: Function, chatId: any, currentUserName: any) {
+export async function getUpdatedMessages(callback: Function, chatId: string, currentUserName: string) {
 
-    const colRef: any = collection(collection(db, "chats"), chatId, "messages")
+    const colRef = collection(collection(db, "chats"), chatId, "messages")
     const q = query( colRef, orderBy('createdAt') )
-    const mesSnap = onSnapshot(q, (snap: any) => {
-        const isThereSentStatus = snap.docs.some((doc: any) => 
+    const mesSnap = onSnapshot(q, (snap) => {
+        const isThereSentStatus = snap.docs.some((doc) => 
           ( doc.data().sender != currentUserName ) && ( doc.data().status == 'sent' )
         )
         if (isThereSentStatus) {
-            snap.docs.map(async (doc: any) => {
+            snap.docs.map(async (doc) => {
                 await updateDoc(doc.ref, { status: 'delivered' }) 
             }) 
         } else {
-            const results = snap.docs.map((doc: any) => {
+            const results = snap.docs.map((doc) => {
                 return doc.data();
             })
             callback(results)
@@ -160,7 +165,7 @@ export async function getUpdatedMessages(callback: Function, chatId: any, curren
     return mesSnap
 }
 
-export async function sendMessage(currentUserName: any, message: any, chatId: any) {
+export async function sendMessage(currentUserName: string, message: string, chatId: string) {
     const docRef = await addDoc(collection(db, "chats", chatId, "messages"), {
         sender: currentUserName,
         message,
@@ -172,6 +177,6 @@ export async function sendMessage(currentUserName: any, message: any, chatId: an
     await updateDoc(docRef, { id: generatedId })
 }
 
-export async function deleteMessage(mId: any, chatId: any) {
+export async function deleteMessage(mId: string, chatId: string) {
     await deleteDoc(doc(db, "chats", chatId, "messages", mId))
 }

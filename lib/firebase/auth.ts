@@ -6,10 +6,12 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   onAuthStateChanged as _onAuthStateChanged,
+  NextOrObserver,
+  User,
 } from 'firebase/auth';
 import { auth } from "./clientApp";
 
-export function onAuthStateChanged(cb: any) {
+export function onAuthStateChanged(cb: NextOrObserver<User>) {
   return _onAuthStateChanged(auth, cb);
 }
 
@@ -31,7 +33,7 @@ export function signOut() {
   auth.signOut();
 }
 
-export async function signUpEmPass(email: any, password: any) {
+export async function signUpEmPass(email: string, password: string) {
   const cred = await createUserWithEmailAndPassword(auth, email, password)
   await sendEmailVerification(auth.currentUser!)
   return cred.user
