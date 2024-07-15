@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import React from 'react'
 import { getAuthenticatedAppForUser } from '../../../lib/firebase/serverApp';
 import { getMessages } from '../../../lib/firebase/firestore';
 import ChatListing from '@/components/chatPage/ChatListing';
@@ -41,7 +40,7 @@ export default async function page({ params }: { params: { chatId: string }}) {
       <div className='h-[calc(100vh-84px)] md:h-screen md:w-[calc(100vw-92px)] md:ml-auto md:p-8 flex justify-center items-center'> 
         <Card className='flex flex-col h-full w-full'>
           <CardContent className='overflow-y-scroll p-4 h-full'>
-            { messagesOfChat && currentUser && 
+            { messagesOfChat && currentUser &&
               <ChatListing chatId={params.chatId} initialUser={currentUser?.toJSON()} initialMessages={JSON.parse(JSON.stringify(messagesOfChat))} />
             }
           </CardContent>
