@@ -1,7 +1,6 @@
 "use server"
 import { cookies } from "next/headers";
 import { sendMessage } from "../../lib/firebase/firestore";
-import { redirect } from "next/navigation";
 
 export async function setCookie(name: string, value: string) {
     cookies().set(name, value)
@@ -11,19 +10,18 @@ export async function removeCookie(name: string) {
     cookies().delete(name)
 }
 
-export async function handleSending(username: string, chatId: string, formData: FormData) {
+export async function handleSending(chatId: string, username: string, formData: FormData) {
 
-    const message = formData.get("message") as string
-    let redirectPath: string | null;;
-    if (message.trim() != '') {
-      try {
-        await sendMessage(username, message, chatId)
-        redirectPath=`/${chatId}`
-      } catch (err: any) {
-        console.error( err );
-        redirectPath=`/${chatId}?message=${message}`
-      }
-      redirect(redirectPath)
-    }
+  const message = formData.get("message") as string
+  const file = formData.get("file") as File | null;
+  //let redirectPath: string = `/${chatId}`
+  
+  try {
+    await sendMessage(username, chatId, message, file)
+    return { status: 'success' }
+  } catch (err: any) {
+    console.error( err );
+    return {status: 'An error occured'}
+  }
 
 }

@@ -100,7 +100,7 @@ export default async function page({ searchParams }: { searchParams: { message: 
         <CardFooter>
           <div className='flex flex-col gap-1'>
             {searchParams.message && (
-              <p className='text-destructive'>
+              <p className={`${searchParams.message === 'User created, verification email sent!' ? 'text-green-500' : 'text-destructive'}`}>
                 {searchParams.message}
               </p>
             )}

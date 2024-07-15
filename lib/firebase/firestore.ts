@@ -14,9 +14,10 @@ import {
     updateDoc, 
     where 
 } from "firebase/firestore"
-import { db } from "./clientApp"
+import { db, storage } from "./clientApp"
 import { signInEmPass, signUpEmPass } from "./auth"
 import { updateProfile } from "firebase/auth"
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 export type AvatarType = {
     chatId: string
@@ -165,18 +166,32 @@ export async function getUpdatedMessages(callback: Function, chatId: string, cur
     return mesSnap
 }
 
-export async function sendMessage(currentUserName: string, message: string, chatId: string) {
+export async function sendMessage(currentUserName: string, chatId: string, message: string, file: File | null) {
     const docRef = await addDoc(collection(db, "chats", chatId, "messages"), {
         sender: currentUserName,
         message,
+        file: '',
         createdAt: serverTimestamp(),
         id: '',
         status: 'sent'
     })
     const generatedId = docRef.id
-    await updateDoc(docRef, { id: generatedId })
+    let fileLink = ''
+    if (file) {
+        const fileType = file.type.split('/')[0] === 'application' ? 'DOC' : 
+                         file.type.split('/')[0] === 'image' ? 'IMG' : 
+                         file.type.split('/')[0] === 'video' ? 'VID' : 
+                         null
+        fileLink = await getDownloadURL( (await uploadBytes( ref(storage, `${fileType}/${chatId}/${fileType}_${generatedId}`), file )).ref )
+    }
+    await updateDoc(docRef, { id: generatedId, file: fileLink })
 }
 
-export async function deleteMessage(mId: string, chatId: string) {
+export async function deleteMessage(mId: string, chatId: string, file: string) {
     await deleteDoc(doc(db, "chats", chatId, "messages", mId))
+    if (file != '') {
+        const fileName = decodeURIComponent(file).split('/').pop()!.split('?')[0].split('/').pop()
+        const fileRef = ref(storage, `${fileName!.split('_')[0]}/${chatId}/${fileName}`)
+        await deleteObject(fileRef)
+    }
 }

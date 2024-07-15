@@ -5,6 +5,8 @@ import { useUserSession } from '../../../lib/getUser';
 import Message from './Message';
 import type { MessageType } from '@/app/[chatId]/page';
 import type { Unsubscribe, User } from 'firebase/auth';
+import { useChatContext } from '@/app/[chatId]/ChatContext';
+import FileWithDescription from './FileWithDescription';
 
 interface Props {
     initialMessages: MessageType[]
@@ -17,6 +19,7 @@ export default function ChatListing({initialMessages, chatId, initialUser}: Prop
     const user = useUserSession(initialUser)
     const currentUserName = user?.displayName
     const [messages, setMessages] = useState(initialMessages)
+    const { isFileWithDescActive }: any = useChatContext()
     
     useEffect((): (() => void) => {
         const unsub: Promise<Unsubscribe> = getUpdatedMessages(setMessages, chatId, user?.displayName!)        
@@ -25,7 +28,11 @@ export default function ChatListing({initialMessages, chatId, initialUser}: Prop
     
   return (
     <div className="space-y-4">
-        {messages?.length > 0 && messages.map((m, index) => (
+        { isFileWithDescActive && 
+            <FileWithDescription chatId={chatId} username={user!.displayName!}/>
+        }
+        { !isFileWithDescActive && messages?.length > 0 && 
+            messages.map((m, index) => (
             <Message
                 key={index}
                 message={m}
