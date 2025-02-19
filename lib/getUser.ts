@@ -5,7 +5,7 @@ import { getIdToken, User } from 'firebase/auth';
 import { removeCookie, setCookie } from '@/app/actions';
 import { onAuthStateChanged } from './firebase/auth';
 
-export function useUserSession(initialUser: User | {}) {
+export function useUserSession(initialUser: User | null) {
     // The initialUser comes from the server via a server component
     const [user, setUser] = useState<User | null>(initialUser);
     const router = useRouter();

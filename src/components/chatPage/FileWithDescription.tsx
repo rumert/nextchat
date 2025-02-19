@@ -5,6 +5,7 @@ import React, { FormEvent, useEffect, useState } from 'react'
 import {
     Dialog,
     DialogContent,
+    DialogTitle,
 } from "@/components/ui/dialog"
 import { Input } from '../ui/input'
 import { SubmitButton } from '../SubmitButton'
@@ -52,6 +53,9 @@ export default function FileWithDescription({ chatId, username }: Props) {
   return (
     <Dialog open={isFileWithDescActive} onOpenChange={setIsFileWithDescActive}>
       <DialogContent>
+        <DialogTitle>
+            Send File
+        </DialogTitle>
         {preview && fileToSend && fileToSend.type.startsWith('image/') && (
             <div className='mt-5 h-[50vh] relative'>
                 <Image

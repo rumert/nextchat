@@ -8,7 +8,7 @@ import { getAuth } from "firebase/auth";
 import { cookies } from "next/headers";
 
 export async function getAuthenticatedAppForUser() {
-  const idToken = cookies().get("idToken")?.value;
+  const idToken = ( await cookies() ).get("idToken")?.value;
 
   const firebaseServerApp = initializeServerApp(
     firebaseConfig,

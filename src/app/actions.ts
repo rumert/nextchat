@@ -3,11 +3,11 @@ import { cookies } from "next/headers";
 import { sendMessage } from "../../lib/firebase/firestore";
 
 export async function setCookie(name: string, value: string) {
-    cookies().set(name, value)
+  (await cookies()).set(name, value)
 }
 
 export async function removeCookie(name: string) {
-    cookies().delete(name)
+  (await cookies()).delete(name)
 }
 
 export async function handleSending(chatId: string, username: string, formData: FormData) {

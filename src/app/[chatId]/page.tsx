@@ -18,6 +18,7 @@ export type MessageType = {
 }
 
 export default async function page({ params }: { params: { chatId: string }}) {
+  const { chatId } = await params;
   const { currentUser }: { currentUser: User | null } = await getAuthenticatedAppForUser();
 
   if (!currentUser) {
@@ -26,7 +27,7 @@ export default async function page({ params }: { params: { chatId: string }}) {
 
   let messagesOfChat = null
   try {
-    messagesOfChat = await getMessages( currentUser.displayName!, params.chatId )
+    messagesOfChat = await getMessages( currentUser.displayName!, chatId )
   } catch (err: any) {
     console.error( err );
   } finally {
@@ -41,11 +42,11 @@ export default async function page({ params }: { params: { chatId: string }}) {
         <Card className='flex flex-col h-full w-full'>
           <CardContent className='overflow-y-scroll p-4 h-full'>
             { messagesOfChat && currentUser &&
-              <ChatListing chatId={params.chatId} initialUser={currentUser?.toJSON()} initialMessages={JSON.parse(JSON.stringify(messagesOfChat))} />
+              <ChatListing chatId={chatId} initialUser={currentUser?.toJSON()} initialMessages={JSON.parse(JSON.stringify(messagesOfChat))} />
             }
           </CardContent>
           <CardFooter>
-            { currentUser && <SendMessage chatId={params.chatId} username={currentUser.displayName!} /> }
+            { currentUser && <SendMessage chatId={chatId} username={currentUser.displayName!} /> }
           </CardFooter>  
         </Card>
       </div>

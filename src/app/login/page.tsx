@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 export default async function page({ searchParams }: { searchParams: { message: string } }) {
   const { currentUser } = await getAuthenticatedAppForUser();
+  const { message: messageParam } = await searchParams;
 
   if (currentUser) {
     return redirect("/")
@@ -23,9 +24,9 @@ export default async function page({ searchParams }: { searchParams: { message: 
         </CardContent>
         <CardFooter>
           <div className='flex flex-col gap-1'>
-            {searchParams.message && (
+            {messageParam && (
               <p className='text-destructive'>
-                {searchParams.message}
+                {messageParam}
               </p>
             )}
             <div>

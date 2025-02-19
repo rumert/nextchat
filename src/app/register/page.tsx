@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input'
 export default async function page({ searchParams }: { searchParams: { message: string } }) {
 
   const { currentUser } = await getAuthenticatedAppForUser();
+  const { message: messageParam } = await searchParams;
 
   if (currentUser) {
     return redirect("/")
@@ -99,9 +100,9 @@ export default async function page({ searchParams }: { searchParams: { message: 
         </CardContent>
         <CardFooter>
           <div className='flex flex-col gap-1'>
-            {searchParams.message && (
-              <p className={`${searchParams.message === 'User created, verification email sent!' ? 'text-green-500' : 'text-destructive'}`}>
-                {searchParams.message}
+            {messageParam && (
+              <p className={`${messageParam === 'User created, verification email sent!' ? 'text-green-500' : 'text-destructive'}`}>
+                {messageParam}
               </p>
             )}
             <div>
