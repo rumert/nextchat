@@ -13,12 +13,12 @@ import { useRouter } from 'next/navigation';
 
 interface Props {
   chatId: string
-  username: string
+  userId: string
 }
 
-export default function SendMessage({ chatId, username }: Props) {
+export default function SendMessage({ chatId, userId }: Props) {
 
-  const handleSendingWithProps = handleSending.bind(null, chatId, username)
+  const handleSendingWithProps = handleSending.bind(null, chatId, userId)
   const { setIsFileWithDescActive, setFileToSend }: any = useChatContext()
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()

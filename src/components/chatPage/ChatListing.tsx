@@ -11,32 +11,32 @@ import FileWithDescription from './FileWithDescription';
 interface Props {
     initialMessages: MessageType[]
     chatId: string
-    initialUser: User | {}
+    initialUser: User | null
 }
 
 export default function ChatListing({initialMessages, chatId, initialUser}: Props) {
 
     const user = useUserSession(initialUser)
-    const currentUserName = user?.displayName
+    const currentUserId = user?.uid
     const [messages, setMessages] = useState(initialMessages)
     const { isFileWithDescActive }: any = useChatContext()
     
     useEffect((): (() => void) => {
-        const unsub: Promise<Unsubscribe> = getUpdatedMessages(setMessages, chatId, user?.displayName!)        
+        const unsub: Promise<Unsubscribe> = getUpdatedMessages(setMessages, chatId, user?.uid!)        
         return () => unsub
     }, [])
     
   return (
     <div className="space-y-4">
         { isFileWithDescActive && 
-            <FileWithDescription chatId={chatId} username={user!.displayName!}/>
+            <FileWithDescription chatId={chatId} userId={user!.uid}/>
         }
         { !isFileWithDescActive && messages?.length > 0 && 
             messages.map((m, index) => (
             <Message
                 key={index}
                 message={m}
-                isCurrentUserSender={m.sender === currentUserName}
+                isCurrentUserSender={m.sender === currentUserId}
                 chatId={chatId}
             />
         ))}

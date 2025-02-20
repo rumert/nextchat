@@ -16,14 +16,14 @@ import { FaFile } from 'react-icons/fa6'
   
 interface Props {
     chatId: string
-    username: string
+    userId: string
 }
 
-export default function FileWithDescription({ chatId, username }: Props) {
+export default function FileWithDescription({ chatId, userId }: Props) {
 
     const { isFileWithDescActive, setIsFileWithDescActive, fileToSend }: any = useChatContext()
     const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
-    const handleSendingWithProps = handleSending.bind(null, chatId, username)
+    const handleSendingWithProps = handleSending.bind(null, chatId, userId)
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
 

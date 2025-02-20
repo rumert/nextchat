@@ -19,7 +19,6 @@ export default function LoginUser() {
         await signInUser(email, password);
         router.push('/');
       } catch (err: any) {
-        console.error(err);
         router.push(`/login/?message=${err.message}`);
       }
     };

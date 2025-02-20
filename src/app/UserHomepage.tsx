@@ -22,7 +22,6 @@ export default async function UserHomepage({ initialUser, message }: Props) {
         chatDocId = await addFriend(initialUser.uid, friendName)
         redirectPath = `/${chatDocId}`
       } catch (err: any) {
-        console.error( err );
         redirectPath = `/?message=${err.message}`
       } finally {
         return redirect(redirectPath!);

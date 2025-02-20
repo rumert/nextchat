@@ -34,7 +34,6 @@ export default async function page({ searchParams }: { searchParams: { message: 
         await createUser(email, password, nickname)
         redirectPath = "/register?message=User created, verification email sent!"
       } catch (err: any) {
-        console.error( err );
         redirectPath = `/register/?message=${err.message}`
       } finally {
         return redirect(redirectPath!)

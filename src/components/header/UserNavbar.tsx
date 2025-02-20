@@ -5,25 +5,26 @@ import { useRouter } from 'next/navigation';
 import { signOut } from '../../../lib/firebase/auth';
 import { AvatarType, getAvatars } from '../../../lib/firebase/firestore';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Avatar, AvatarImage } from '../ui/avatar';
 import { Skeleton } from '../ui/skeleton';
 
-export default function UserNavbar({ nickname }: { nickname: string }) {
+export default function UserNavbar({ userId }: { userId: string }) {
 
-  const [avatars, setAvatars] = useState<AvatarType[] | []>([])
+  const [userAvatar, setUserAvatar] = useState<AvatarType | null>(null)
+  const [chatAvatars, setChatAvatars] = useState<AvatarType[] | []>([])
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
 
     async function getData() {
-      const data = await getAvatars(nickname)
-      setAvatars(data) 
-      setIsLoading(false)       
+      const data = await getAvatars(userId)
+      setUserAvatar(data.find(avatar => avatar.userId === userId)!);
+      setChatAvatars(data.filter(avatar => avatar.userId !== userId));
+      setIsLoading(false)
     }       
     getData()
-        
-  }, [])
+  }, [userId])
 
   async function handleLogOut(e: any) {
     e.preventDefault()
@@ -41,13 +42,12 @@ export default function UserNavbar({ nickname }: { nickname: string }) {
           return  <Skeleton key={index} className="h-16 w-16 rounded-full" /> 
         })}
         
-        {avatars.length != 0 && !isLoading &&
-          avatars.map( (avatar, index: number) => {
+        {chatAvatars.length != 0 && !isLoading &&
+          chatAvatars.map( (avatar, index: number) => {
           return  (
             <Link href={`/${avatar.chatId}`} key={index}>
               <Avatar className='w-16 h-16'>
-                <AvatarImage src={`/avatar-${index + 1}.jpg`} />
-                <AvatarFallback>{avatar.name.match(/\b(\w)/g)?.join('').toUpperCase()}</AvatarFallback>
+                <AvatarImage src={avatar.profilePic} />
               </Avatar>
             </Link>  
           )
@@ -58,8 +58,7 @@ export default function UserNavbar({ nickname }: { nickname: string }) {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar className='w-16 h-16'>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>{nickname.match(/\b(\w)/g)?.join('').toUpperCase()}</AvatarFallback>
+            <AvatarImage src={userAvatar?.profilePic} />
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

@@ -21,22 +21,37 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage
 
 export type AvatarType = {
     chatId: string
-    name: string
+    userId: string
+    profilePic: string
 }
 
-export async function getAvatars(username: string) {
+export async function getAvatars(currentUserId: string) {
     try {
         const result: AvatarType[] = []
-        const q = query( collection(db, "chats"), where("participants", "array-contains", username) )
+        const q = query( collection(db, "chats"), where("participants", "array-contains", currentUserId) )
         const snap = await getDocs(q)
-        snap.forEach((doc) => {
-            for(const name of doc.data().participants) {
-                if (name != username) {result.push({name: name, chatId: doc.id})}
-            }
+        const currentUserDoc = await getDoc(doc(db, 'users', currentUserId))
+        const currentUserData = currentUserDoc.data()!
+
+        result.push({
+            chatId: '',
+            userId: currentUserData.uid, 
+            profilePic: currentUserData.profilePic
         })
+        for (const document of snap.docs) { 
+            for (const id of document.data().participants) {        
+                if (id != currentUserId) {
+                    const userDoc = await getDoc(doc(db, 'users', id));
+                    result.push({
+                        chatId: document.id,
+                        userId: userDoc.data()?.uid || "",
+                        profilePic: userDoc.data()?.profilePic || ""
+                    });
+                }
+            }
+        }        
         return result 
     } catch (error) {
-        console.error('Error getting avatars:', error);
         throw error;
     }
     
@@ -74,7 +89,7 @@ export async function addFriend(currentUserId: string, friendName: string) {
 
         // Create a chat for the users
         const chatDocRef = await addDoc(collection(db, "chats"), {
-            participants: [currentUserName, friendName],
+            participants: [currentUserId, friendData.uid],
             createdAt: serverTimestamp(),
             id: ''
         });
@@ -83,7 +98,6 @@ export async function addFriend(currentUserId: string, friendName: string) {
         await updateDoc(chatDocRef, { id: chatDocRef.id });
         return chatDocRef.id
     } catch (error) {
-        console.error('Error adding friend:', error);
         throw error;
     }
 }
@@ -96,17 +110,22 @@ export async function createUser(email: string, password: string, nickname: stri
         }
         const user = await signUpEmPass(email, password)
         await updateProfile(user, {displayName: nickname})
-        await setDoc(doc(db, "users", user.uid), {
+        const docRef = doc(db, "users", user.uid);
+        await setDoc(docRef, {
             nickname,
             email,
             createdAt: serverTimestamp(),
             uid: user.uid,
             lastLogin: serverTimestamp(),
+            profilePic: '',
             friends: [],
             chats: [],
         })
+        const files = ["01", "02", "03", "04", "05", "06"];
+        const randomFile = files[Math.floor(Math.random() * files.length)];
+        const fileUrl = await getDownloadURL( ref(storage, `profile_pics/templates/${randomFile}.png`) )
+        await updateDoc(docRef, { profilePic: fileUrl })
     } catch (error) {
-        console.error('Error creating user:', error);
         throw error;
     }
 }
@@ -118,12 +137,12 @@ export async function signInUser(email: string, password: string) {
     })
 }
 
-export async function getMessages( currentUserName: string, chatId: string ) {
+export async function getMessages( currentUserId: string, chatId: string ) {
     try {
         const docRef = doc(db, "chats", chatId)
         const chatDoc = await getDoc(docRef)
         const participants = chatDoc.data()?.participants
-        if ( !participants || !participants.includes(currentUserName) ) {
+        if ( !participants || !participants.includes(currentUserId) ) {
             throw new Error('no access');
         }
 
@@ -131,25 +150,24 @@ export async function getMessages( currentUserName: string, chatId: string ) {
         const snap = await getDocs(q)
         let messages = []
         for (const doc of snap.docs) {
-            if (doc.data().sender != currentUserName) {
+            if (doc.data().sender != currentUserId) {
                 await updateDoc(doc.ref, { status: 'delivered' });
             }
             messages.push(doc.data());
         }
         return messages
     } catch (error: any) {
-        console.log(error);
         throw new Error(error.message)
     }
 }
 
-export async function getUpdatedMessages(callback: Function, chatId: string, currentUserName: string) {
+export async function getUpdatedMessages(callback: Function, chatId: string, currentUserId: string) {
 
     const colRef = collection(collection(db, "chats"), chatId, "messages")
     const q = query( colRef, orderBy('createdAt') )
     const mesSnap = onSnapshot(q, (snap) => {
         const isThereSentStatus = snap.docs.some((doc) => 
-          ( doc.data().sender != currentUserName ) && ( doc.data().status == 'sent' )
+          ( doc.data().sender != currentUserId ) && ( doc.data().status == 'sent' )
         )
         if (isThereSentStatus) {
             snap.docs.map(async (doc) => {
@@ -166,9 +184,9 @@ export async function getUpdatedMessages(callback: Function, chatId: string, cur
     return mesSnap
 }
 
-export async function sendMessage(currentUserName: string, chatId: string, message: string, file: File | null) {
+export async function sendMessage(currentUserId: string, chatId: string, message: string, file: File | null) {
     const docRef = await addDoc(collection(db, "chats", chatId, "messages"), {
-        sender: currentUserName,
+        sender: currentUserId,
         message,
         file: '',
         createdAt: serverTimestamp(),

@@ -27,9 +27,8 @@ export default async function page({ params }: { params: { chatId: string }}) {
 
   let messagesOfChat = null
   try {
-    messagesOfChat = await getMessages( currentUser.displayName!, chatId )
+    messagesOfChat = await getMessages( currentUser.uid, chatId )
   } catch (err: any) {
-    console.error( err );
   } finally {
     if (!messagesOfChat) {
       return redirect('/')
@@ -46,7 +45,7 @@ export default async function page({ params }: { params: { chatId: string }}) {
             }
           </CardContent>
           <CardFooter>
-            { currentUser && <SendMessage chatId={chatId} username={currentUser.displayName!} /> }
+            { currentUser && <SendMessage chatId={chatId} userId={currentUser.uid!} /> }
           </CardFooter>  
         </Card>
       </div>

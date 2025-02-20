@@ -9,7 +9,7 @@ export default function Header({ initialUser }: { initialUser: User | null }) {
     const user = useUserSession(initialUser);
   return user ? (
     <header>
-      <UserNavbar nickname={user.displayName!} />
+      <UserNavbar userId={user.uid!} />
     </header>
   ) : (
     <header>
